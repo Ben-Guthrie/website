@@ -13,6 +13,7 @@
     "footers": {
       "left": { "icon": "upvotes", "text": "4.4k" },
       "right": { "icon": "shares", "text": "1.8k" }
-    }
+    },
+    "link": { "type": "internal", "path": "mambo" }
   }
 ]

@@ -1,9 +1,9 @@
-<script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <ProjectsPortfolio />
+  <SkillsPortfolio />
 </template>
+
+<script setup lang="ts">
+import ProjectsPortfolio from '@/contents/ProjectsPortfolio.vue'
+import SkillsPortfolio from '@/contents/SkillsPortfolio.vue'
+</script>

@@ -11,6 +11,6 @@ defineProps<{
 
 <style scoped lang="postcss">
 h1 {
-  @apply font-bold text-xl;
+  @apply font-bold text-3xl pb-4;
 }
 </style>

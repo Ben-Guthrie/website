@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import Projects from './contents/Projects.vue'
+import HomeView from './views/HomeView.vue'
 </script>
 
 <template>
@@ -17,7 +16,7 @@ import Projects from './contents/Projects.vue'
     </header>
 
     <div class="content">
-      <Projects />
+      <HomeView />
     </div>
   </div>
 </template>
@@ -43,11 +42,11 @@ header .navbar {
 }
 
 header .name {
-  @apply flex flex-nowrap;
+  @apply flex flex-nowrap pl-2;
 }
 
 nav {
-  @apply flex flex-row justify-between items-center;
+  @apply flex flex-row justify-between items-center pr-2;
   @apply space-x-2 md:space-x-4 xl:space-x-6 h-full;
 }
 

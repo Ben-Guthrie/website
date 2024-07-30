@@ -7,13 +7,15 @@
         :class="{ active: isFilterActive(filter.tag) }"
         @click="setFilter(filter.tag)"
         v-for="filter in categories"
+        :key="filter.tag"
       >
         {{ filter.name }}
       </div>
     </div>
     <div class="portfolio">
-      <PortfolioItem
-        v-for="project in projectsJson"
+      <ProjectPortfolioItem
+        v-for="project in projects"
+        :key="project.alias"
         :item="project"
         v-show="isItemShown(project.tags)"
       />
@@ -23,8 +25,12 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
-import PortfolioItem from '../components/PortfolioItem.vue'
-import projectsJson from '../data/projects.json'
+import ProjectPortfolioItem from '@/components/ProjectPortfolioItem.vue'
+import { useContentsStore } from '@/stores/contents'
+
+const contentsStore = useContentsStore()
+
+const projects = contentsStore.projects
 
 const filters: Ref<string[]> = ref([])
 
@@ -56,6 +62,7 @@ function isItemShown(tags: string[]) {
 <style scoped lang="postcss">
 .container {
   @apply w-full max-h-[680px];
+  @apply flex flex-col items-center;
 }
 
 .filters {
@@ -68,10 +75,11 @@ function isItemShown(tags: string[]) {
 }
 
 .active {
-  @apply border-green-600 border-4;
+  @apply border-green-600;
 }
 
 .portfolio {
-  @apply overflow-auto flex flex-row justify-center;
+  @apply overflow-auto flex flex-row justify-center overflow-auto max-h-[1080];
+  @apply w-full p-6;
 }
 </style>
