@@ -4,9 +4,9 @@
     <div class="filters">
       <div
         class="filter-item"
-        :class="{ active: isFilterActive(filter.tag) }"
+        :class="{ active: cs.isFilterActive(filter.tag) }"
         @click="setFilter(filter.tag)"
-        v-for="filter in categories"
+        v-for="filter in projectTags"
         :key="filter.tag"
       >
         {{ filter.name }}
@@ -14,48 +14,27 @@
     </div>
     <div class="portfolio">
       <ProjectPortfolioItem
-        v-for="project in projects"
+        v-for="project in cs.projects"
         :key="project.alias"
         :item="project"
-        v-show="isItemShown(project.tags)"
+        v-show="isItemVisible(project.alias)"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
 import ProjectPortfolioItem from '@/components/ProjectPortfolioItem.vue'
-import { useContentsStore } from '@/stores/contents'
+import { projectTags, useContentsStore } from '@/stores/contents'
 
-const contentsStore = useContentsStore()
-
-const projects = contentsStore.projects
-
-const filters: Ref<string[]> = ref([])
-
-const categories = [
-  { tag: 'data', name: 'Data Analysis' },
-  { tag: 'web', name: 'Web Design' }
-]
-
-function isFilterActive(tag: string) {
-  return filters.value.includes(tag)
-}
+const cs = useContentsStore()
 
 function setFilter(tag: string) {
-  if (isFilterActive(tag)) {
-    filters.value.splice(filters.value.indexOf(tag), 1)
-  } else {
-    filters.value.push(tag)
-  }
-  console.log(filters.value)
+  cs.setFilter(tag)
 }
 
-function isItemShown(tags: string[]) {
-  if (filters.value.length == 0) return true
-  if (tags.some((tag) => filters.value.includes(tag))) return true
-  return false
+function isItemVisible(alias: string) {
+  return cs.visibleProjects.includes(alias)
 }
 </script>
 

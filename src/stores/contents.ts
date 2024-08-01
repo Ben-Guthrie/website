@@ -1,7 +1,12 @@
-import { ref, computed, type ComputedRef } from 'vue'
+import { ref, computed, type ComputedRef, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import projectsJson from '../data/projects.json'
 import type { ProjectItem } from '@/types'
+
+export const projectTags = [
+  { tag: 'data', name: 'Data Analysis' },
+  { tag: 'web', name: 'Web Design' }
+]
 
 export const useContentsStore = defineStore('contents', () => {
   // list of all projects
@@ -34,7 +39,7 @@ export const useContentsStore = defineStore('contents', () => {
       {} as {
         [skill: string]: {
           experience: { project: string; level: 1 | 2 | 3 }[]
-          total: ComputedRef<number> | null
+          total: number | null
         }
       }
     )
@@ -42,14 +47,59 @@ export const useContentsStore = defineStore('contents', () => {
 
   // compute the total experience for each skill
   Object.values(skills.value).forEach((value) => {
-    value.total = computed(() =>
-      value.experience.reduce((total, experience) => (total += experience.level), 0)
+    value.total = value.experience.reduce((total, experience) => (total += experience.level), 0)
+  })
+
+  // make array of [word, weight] for the wordcloud
+  const skillWords = computed(() =>
+    Object.entries(skills.value).reduce(
+      (accumulator, [name, skill]) => {
+        console.log(skill.total)
+        accumulator.push([name, skill.total || 0])
+        return accumulator
+      },
+      [] as Array<[string, number]>
+    )
+  )
+
+  const filters: Ref<Array<string>> = ref([])
+
+  function isFilterActive(tag: string) {
+    return filters.value.includes(tag)
+  }
+
+  function setFilter(tag: string) {
+    if (isFilterActive(tag)) {
+      filters.value.splice(filters.value.indexOf(tag), 1)
+    } else {
+      filters.value.push(tag)
+    }
+    console.log(filters.value)
+  }
+
+  const visibleProjects = computed(() => {
+    const projectAliases = projects.value.map((project) => project.alias)
+    // if nothing is filtered, return all
+    if (filters.value.length === 0) {
+      return projectAliases
+    }
+    // otherwise check if tag is in filters
+    return projectAliases.filter((_, index) =>
+      projects.value.at(index)?.tags.some((tag) => isFilterActive(tag))
     )
   })
 
-  const activeContent = ref('')
+  const highlightedProjects = ref([])
+
+  const visibleSkills = computed(() => {
+    // All skills listed in visible projects
+    return Object.keys(skills.value).filter((skill) =>
+      skills.value[skill].experience.some((exp) => visibleProjects.value.includes(exp.project))
+    )
+  })
 
   function moveProjectToStart(project: string) {
+    // Move a project to the start of the list
     projects.value.sort((a, b) => {
       if (a.alias === project) return -1
       if (b.alias === project) return 1
@@ -57,5 +107,16 @@ export const useContentsStore = defineStore('contents', () => {
     })
   }
 
-  return { projects, skills, projectsDict, activeContent, moveProjectToStart }
+  return {
+    projects,
+    skills,
+    skillWords,
+    projectsDict,
+    visibleProjects,
+    highlightedProjects,
+    visibleSkills,
+    moveProjectToStart,
+    isFilterActive,
+    setFilter
+  }
 })
