@@ -15,5 +15,56 @@
       "right": { "icon": "shares", "text": "1.8k" }
     },
     "link": { "type": "internal", "path": "mambo" }
+  },
+  {
+    "name": "Analysis of the ages of women named in Mambo No. 5",
+    "alias": "mambo2",
+    "tags": ["data"],
+    "summary": "Summary text...",
+    "thumbnail": "mambo.jpg",
+    "skills": [
+      { "skill": "python", "level": 1 },
+      { "skill": "pandas", "level": 1 },
+      { "skill": "vega", "level": 1 }
+    ],
+    "footers": {
+      "left": { "icon": "upvotes", "text": "4.4k" },
+      "right": { "icon": "shares", "text": "1.8k" }
+    },
+    "link": { "type": "internal", "path": "mambo" }
+  },
+  {
+    "name": "Analysis of the ages of women named in Mambo No. 5",
+    "alias": "mambo3",
+    "tags": ["data"],
+    "summary": "Summary text...",
+    "thumbnail": "mambo.jpg",
+    "skills": [
+      { "skill": "python", "level": 1 },
+      { "skill": "pandas", "level": 1 },
+      { "skill": "vega", "level": 1 }
+    ],
+    "footers": {
+      "left": { "icon": "upvotes", "text": "4.4k" },
+      "right": { "icon": "shares", "text": "1.8k" }
+    },
+    "link": { "type": "internal", "path": "mambo" }
+  },
+  {
+    "name": "Analysis of the ages of women named in Mambo No. 5",
+    "alias": "mambo4",
+    "tags": ["data"],
+    "summary": "Summary text...",
+    "thumbnail": "mambo.jpg",
+    "skills": [
+      { "skill": "python", "level": 1 },
+      { "skill": "pandas", "level": 1 },
+      { "skill": "vega", "level": 1 }
+    ],
+    "footers": {
+      "left": { "icon": "upvotes", "text": "4.4k" },
+      "right": { "icon": "shares", "text": "1.8k" }
+    },
+    "link": { "type": "internal", "path": "mambo" }
   }
 ]

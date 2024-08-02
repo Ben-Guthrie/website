@@ -40,16 +40,18 @@ function isItemVisible(alias: string) {
 
 <style scoped lang="postcss">
 .container {
-  @apply w-full max-h-[680px];
+  @apply w-full max-h-[540px] overflow-auto;
   @apply flex flex-col items-center;
 }
 
 .filters {
-  @apply flex flex-row p-2 space-x-2 flex-nowrap overflow-auto;
+  @apply flex flex-row p-4 space-x-2;
+  @apply overflow-x-auto overflow-y-clip;
+  @apply flex-nowrap items-center;
 }
 
 .filter-item {
-  @apply cursor-pointer p-2;
+  @apply cursor-pointer p-2 h-fit;
   @apply rounded-lg border-2 border-slate-400;
 }
 
@@ -58,7 +60,8 @@ function isItemVisible(alias: string) {
 }
 
 .portfolio {
-  @apply overflow-auto flex flex-row justify-center overflow-auto max-h-[1080];
+  @apply overflow-auto flex flex-row flex-wrap;
+  @apply justify-around gap-2 overflow-y-auto h-full;
   @apply w-full p-6;
 }
 </style>

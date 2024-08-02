@@ -1,6 +1,8 @@
 <template>
-  <h1>{{ title }}</h1>
-  <slot> </slot>
+  <div class="portfolio-content">
+    <h1>{{ title }}</h1>
+    <slot> </slot>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -10,6 +12,9 @@ defineProps<{
 </script>
 
 <style scoped lang="postcss">
+.portfolio-content {
+  @apply flex flex-col items-center overflow-auto h-fit w-full;
+}
 h1 {
   @apply font-bold text-3xl pb-4;
 }

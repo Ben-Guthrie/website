@@ -52,7 +52,7 @@ nav {
 
 .content {
   @apply flex flex-col overflow-auto h-full;
-  @apply items-center py-8;
-  @apply max-w-[680px] w-full;
+  @apply items-center;
+  @apply w-full;
 }
 </style>

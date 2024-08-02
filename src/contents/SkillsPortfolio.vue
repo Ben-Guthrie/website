@@ -23,7 +23,7 @@ function isWordActive(word: string) {
 
 <template>
   <PortfolioContent title="Skills">
-    <VueWordCloud :words="cs.skillWords">
+    <VueWordCloud class="wordcloud" style="width: 640px; height: 128px" :words="cs.skillWords">
       <template v-slot="{ text, weight, word }">
         <div
           class="word"
@@ -41,6 +41,9 @@ function isWordActive(word: string) {
 </template>
 
 <style scoped lang="postcss">
+.wordcloud {
+  @apply h-[320px] w-[320px];
+}
 .word {
   @apply cursor-pointer;
 }

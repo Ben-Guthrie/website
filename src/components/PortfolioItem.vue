@@ -1,17 +1,17 @@
 <template>
   <div class="item" @mouseover="hovered = true" @mouseleave="hovered = false">
-    <span class="text-md md:text-md font-semibold" :class="{ 'text-xl font-bold': hovered }">{{
+    <span class="text-md md:text-md font-semibold" :class="{ 'text-xl font-bold': active }">{{
       item.name
     }}</span>
 
     <img :src="'img/' + item.thumbnail" class="thumbnail" />
 
-    <hr class="divider" v-show="hovered" />
+    <hr class="divider" v-show="active" />
 
-    <span class="summary" v-show="hovered">{{ item.summary }}</span>
+    <span class="summary" v-show="active">{{ item.summary }}</span>
 
-    <hr class="divider" v-show="hovered" />
-    <div v-show="hovered">
+    <hr class="divider" v-show="active" />
+    <div v-show="active">
       <slot />
     </div>
 
@@ -43,17 +43,19 @@ defineProps<{
   item: PortfolioItem | ProjectItem
 }>()
 
+const active = ref(false)
 const hovered = ref(false)
 </script>
 
 <style scoped lang="postcss">
 .item {
-  @apply border border-slate-200 basis-2/5 shadow hover:shadow-lg rounded p-2 cursor-pointer;
+  @apply border border-slate-200 basis-[31%] shadow rounded p-2 cursor-pointer;
   @apply flex flex-col items-center;
+  @apply h-fit;
 }
 
-.item:hover {
-  @apply basis-1/2;
+.item:active {
+  @apply basis-1/3 shadow-lg;
 }
 
 hr.divider {

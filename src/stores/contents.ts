@@ -85,7 +85,7 @@ export const useContentsStore = defineStore('contents', () => {
     }
     // otherwise check if tag is in filters
     return projectAliases.filter((_, index) =>
-      projects.value.at(index)?.tags.some((tag) => isFilterActive(tag))
+      projects.value[index].tags.some((tag) => isFilterActive(tag))
     )
   })
 
