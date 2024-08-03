@@ -2,23 +2,37 @@
 import { useContentsStore } from '@/stores/contents'
 import PortfolioContent from '../components/PortfolioContent.vue'
 import VueWordCloud from 'vuewordcloud'
+import { ref, watch, type Ref } from 'vue'
 
 const cs = useContentsStore()
 
 function onWordClick(word: string) {
   console.log(word)
-  console.log(cs.visibleProjects)
-  console.log(cs.visibleSkills)
 }
 function onWordHover(word: string) {
-  console.log(word, 'hovered')
+  cs.setHoveredSkill(word)
+  visibleTooltip.value = word
 }
-function onWordLeave(word: string) {
-  console.log(word, 'left')
+async function onWordLeave(word: string) {
+  cs.unsetHoveredSkill(word)
+  // When mouse leaves, wait 0.5 seconds and close the tooltip if nothing has been hovered since the mouse left
+  let closeTooltip = true
+  const unwatch = watch(
+    () => cs.isSkillHovered(word),
+    () => (closeTooltip = false)
+  )
+  await new Promise((resolve) => {
+    setTimeout(resolve, 500)
+  }).then(() => {
+    unwatch()
+    if (closeTooltip && visibleTooltip.value === word) visibleTooltip.value = undefined
+  })
 }
 function isWordActive(word: string) {
   return cs.visibleSkills.includes(word)
 }
+
+const visibleTooltip: Ref<string | undefined> = ref(undefined)
 </script>
 
 <template>
@@ -34,6 +48,14 @@ function isWordActive(word: string) {
           @mouseleave="onWordLeave(word[0])"
         >
           {{ text }}
+          <div
+            class="tooltip"
+            v-if="visibleTooltip === word[0]"
+            @mouseover="onWordHover(word[0])"
+            @mouseleave="onWordLeave(word[0])"
+          >
+            Tooltip
+          </div>
         </div>
       </template>
     </VueWordCloud>
@@ -42,10 +64,13 @@ function isWordActive(word: string) {
 
 <style scoped lang="postcss">
 .wordcloud {
-  @apply h-[320px] w-[320px];
+  @apply h-[320px] w-[320px] !z-0;
 }
 .word {
-  @apply cursor-pointer;
+  @apply cursor-pointer relative !z-0 !flex;
+}
+.tooltip {
+  @apply absolute !z-[100] bottom-0 left-[105%] text-sm bg-white;
 }
 .word-active {
   @apply text-black;

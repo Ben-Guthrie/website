@@ -5,7 +5,9 @@ import type { ProjectItem } from '@/types'
 
 export const projectTags = [
   { tag: 'data', name: 'Data Analysis' },
-  { tag: 'web', name: 'Web Design' }
+  { tag: 'web', name: 'Web Design' },
+  { tag: 'backend', name: 'Backend' },
+  { tag: 'ml', name: 'Machine Learning' }
 ]
 
 export const useContentsStore = defineStore('contents', () => {
@@ -16,7 +18,7 @@ export const useContentsStore = defineStore('contents', () => {
   const projectsDict: ComputedRef<{ [alias: string]: ProjectItem }> = computed(() =>
     projects.value.reduce(
       (dict, project) => {
-        dict['a'] = project
+        dict[project.alias] = project
         return dict
       },
       {} as { [alias: string]: ProjectItem }
@@ -28,7 +30,7 @@ export const useContentsStore = defineStore('contents', () => {
     projects.value.reduce(
       (accumulator, project) => {
         project.skills.forEach((skill) => {
-          if (!(skill.skill in Object.keys(accumulator))) {
+          if (!Object.keys(accumulator).includes(skill.skill)) {
             accumulator[skill.skill] = { experience: [], total: null }
           }
           accumulator[skill.skill].experience.push({ project: project.alias, level: skill.level })
@@ -89,7 +91,60 @@ export const useContentsStore = defineStore('contents', () => {
     )
   })
 
-  const highlightedProjects = ref([])
+  const activeProject: Ref<string | undefined> = ref()
+
+  function setProjectActive(alias: string) {
+    activeProject.value = alias
+  }
+
+  function setProjectInactive(alias: string) {
+    if (activeProject.value === alias) activeProject.value = undefined
+  }
+
+  function isProjectActive(alias: string) {
+    return activeProject.value === alias
+  }
+
+  const hoveredProjects: Ref<Array<string>> = ref([])
+
+  function setHoveredProject(alias: string) {
+    hoveredProjects.value = [alias]
+  }
+
+  function unsetHoveredProject(alias: string) {
+    if (hoveredProjects.value.includes(alias))
+      hoveredProjects.value.splice(hoveredProjects.value.indexOf(alias), 1)
+  }
+
+  function isProjectHovered(alias: string) {
+    return hoveredProjects.value.includes(alias)
+  }
+
+  const hoveredSkill: Ref<string | undefined> = ref()
+
+  function setHoveredSkill(skill: string) {
+    hoveredSkill.value = skill
+  }
+
+  function unsetHoveredSkill(skill: string) {
+    if (hoveredSkill.value === skill) hoveredSkill.value = undefined
+  }
+
+  function isSkillHovered(skill: string) {
+    return hoveredSkill.value === skill
+  }
+
+  const highlightedProjects = computed(() => {
+    // If a project is hovered, highlight it
+    if (hoveredProjects.value.length > 0) {
+      return hoveredProjects.value
+    }
+    // If a skill is hovered, highlight all associated projects
+    if (hoveredSkill.value) {
+      return skills.value[hoveredSkill.value].experience.map((exp) => exp.project)
+    }
+    return []
+  })
 
   const visibleSkills = computed(() => {
     // All skills listed in visible projects
@@ -115,8 +170,18 @@ export const useContentsStore = defineStore('contents', () => {
     visibleProjects,
     highlightedProjects,
     visibleSkills,
+    activeProject,
     moveProjectToStart,
     isFilterActive,
-    setFilter
+    setFilter,
+    setProjectActive,
+    setProjectInactive,
+    isProjectActive,
+    setHoveredProject,
+    unsetHoveredProject,
+    isProjectHovered,
+    setHoveredSkill,
+    unsetHoveredSkill,
+    isSkillHovered
   }
 })

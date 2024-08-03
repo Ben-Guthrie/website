@@ -1,6 +1,6 @@
 [
   {
-    "name": "Analysis of the ages of women named in Mambo No. 5",
+    "name": "\"Mambo No. 5\" names analysis",
     "alias": "mambo",
     "tags": ["data"],
     "summary": "Summary text...",
@@ -11,60 +11,41 @@
       { "skill": "vega", "level": 1 }
     ],
     "footers": {
-      "left": { "icon": "upvotes", "text": "4.4k" },
+      "left": { "icon": "views", "text": "1.5M" },
       "right": { "icon": "shares", "text": "1.8k" }
     },
     "link": { "type": "internal", "path": "mambo" }
   },
   {
-    "name": "Analysis of the ages of women named in Mambo No. 5",
-    "alias": "mambo2",
-    "tags": ["data"],
+    "name": "Lake Louise Interactive Map",
+    "alias": "lakelouise",
+    "tags": ["web", "backend"],
     "summary": "Summary text...",
-    "thumbnail": "mambo.jpg",
+    "thumbnail": "lakelouise.png",
     "skills": [
-      { "skill": "python", "level": 1 },
-      { "skill": "pandas", "level": 1 },
-      { "skill": "vega", "level": 1 }
+      { "skill": "vue", "level": 3 },
+      { "skill": "typescript", "level": 3 },
+      { "skill": "mapbox", "level": 2 },
+      { "skill": "web design", "level": 2 }
     ],
     "footers": {
-      "left": { "icon": "upvotes", "text": "4.4k" },
-      "right": { "icon": "shares", "text": "1.8k" }
+      "left": { "icon": "users", "text": "1k" }
     },
-    "link": { "type": "internal", "path": "mambo" }
+    "link": { "type": "external", "path": "lake-louise.steepdeep.ski" }
   },
   {
-    "name": "Analysis of the ages of women named in Mambo No. 5",
-    "alias": "mambo3",
-    "tags": ["data"],
+    "name": "Satellite visualization",
+    "alias": "satvis",
+    "tags": ["data", "backend", "ml"],
     "summary": "Summary text...",
-    "thumbnail": "mambo.jpg",
+    "thumbnail": "satvis.png",
     "skills": [
-      { "skill": "python", "level": 1 },
-      { "skill": "pandas", "level": 1 },
-      { "skill": "vega", "level": 1 }
+      { "skill": "blender", "level": 3 },
+      { "skill": "datasets", "level": 3 },
+      { "skill": "python", "level": 2 },
+      { "skill": "simulations", "level": 1 }
     ],
-    "footers": {
-      "left": { "icon": "upvotes", "text": "4.4k" },
-      "right": { "icon": "shares", "text": "1.8k" }
-    },
-    "link": { "type": "internal", "path": "mambo" }
-  },
-  {
-    "name": "Analysis of the ages of women named in Mambo No. 5",
-    "alias": "mambo4",
-    "tags": ["data"],
-    "summary": "Summary text...",
-    "thumbnail": "mambo.jpg",
-    "skills": [
-      { "skill": "python", "level": 1 },
-      { "skill": "pandas", "level": 1 },
-      { "skill": "vega", "level": 1 }
-    ],
-    "footers": {
-      "left": { "icon": "upvotes", "text": "4.4k" },
-      "right": { "icon": "shares", "text": "1.8k" }
-    },
-    "link": { "type": "internal", "path": "mambo" }
+    "footers": {},
+    "link": { "type": "external", "path": "https://ben-guthrie.github.io/satvis/" }
   }
 ]

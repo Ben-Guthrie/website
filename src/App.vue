@@ -52,7 +52,7 @@ nav {
 
 .content {
   @apply flex flex-col overflow-auto h-full;
-  @apply items-center;
+  @apply items-center relative;
   @apply w-full;
 }
 </style>

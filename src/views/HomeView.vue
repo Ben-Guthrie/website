@@ -3,11 +3,13 @@
     <ProjectsPortfolio />
     <SkillsPortfolio />
   </div>
+  <ModalPopup class="fixed top-0 left-0 right-0 bottom-0" />
 </template>
 
 <script setup lang="ts">
 import ProjectsPortfolio from '@/contents/ProjectsPortfolio.vue'
 import SkillsPortfolio from '@/contents/SkillsPortfolio.vue'
+import ModalPopup from '@/contents/ModalPopup.vue'
 </script>
 
 <style scoped lang="postcss">

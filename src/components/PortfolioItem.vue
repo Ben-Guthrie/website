@@ -1,34 +1,46 @@
 <template>
-  <div class="item" @mouseover="hovered = true" @mouseleave="hovered = false">
-    <span class="text-md md:text-md font-semibold" :class="{ 'text-xl font-bold': active }">{{
+  <div
+    class="item"
+    :class="{ 'item-hovered': highlighted, 'item-small': !full }"
+    @mouseover="full ? null : setHovered()"
+    @mouseleave="full ? null : setNotHovered()"
+    @click="full ? null : setActive()"
+  >
+    <span class="text-md md:text-md font-semibold" :class="{ 'text-xl font-bold': full }">{{
       item.name
     }}</span>
 
-    <img :src="'img/' + item.thumbnail" class="thumbnail" />
+    <div class="img-container">
+      <img :src="'img/' + item.thumbnail" class="thumbnail" />
+    </div>
 
-    <hr class="divider" v-show="active" />
+    <hr class="divider" v-show="full" />
 
-    <span class="summary" v-show="active">{{ item.summary }}</span>
+    <span class="summary" v-show="full">{{ item.summary }}</span>
 
-    <hr class="divider" v-show="active" />
-    <div v-show="active">
+    <hr class="divider" v-show="full || hovered" />
+    <div class="w-full overflow-hidden" v-if="full || hovered">
       <slot />
     </div>
 
     <hr class="divider" />
 
     <div class="footer">
-      <div class="footer-l">
-        <StatsIcon :icon="item.footers.left.icon" />
-        <span> {{ item.footers.left.text }} </span>
+      <div class="basis-1/4">
+        <div class="footer-l" v-if="item.footers.left !== undefined">
+          <StatsIcon :icon="item.footers.left.icon" />
+          <span> {{ item.footers.left.text }} </span>
+        </div>
       </div>
-      <div class="link" v-if="item.link">
+      <div class="link" v-if="item.link" v-show="full">
         <div>See More</div>
       </div>
 
-      <div class="footer-r">
-        <span> {{ item.footers.right.text }}</span>
-        <StatsIcon :icon="item.footers.right.icon" />
+      <div class="basis-1/4">
+        <div class="footer-r" v-if="item.footers.right !== undefined">
+          <span> {{ item.footers.right.text }}</span>
+          <StatsIcon :icon="item.footers.right.icon" />
+        </div>
       </div>
     </div>
   </div>
@@ -37,33 +49,63 @@
 <script setup lang="ts">
 import type { PortfolioItem, ProjectItem } from '@/types'
 import StatsIcon from './icons/StatsIcon.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useContentsStore } from '@/stores/contents'
 
-defineProps<{
+const props = defineProps<{
   item: PortfolioItem | ProjectItem
+  full: boolean
 }>()
 
-const active = ref(false)
+const cs = useContentsStore()
+
 const hovered = ref(false)
+
+const highlighted = computed(() => cs.highlightedProjects.includes(props.item.alias))
+
+const active = computed(() => cs.isProjectActive(props.item.alias))
+
+function setHovered() {
+  hovered.value = true
+  cs.setHoveredProject(props.item.alias)
+}
+
+function setNotHovered() {
+  hovered.value = false
+  cs.unsetHoveredProject(props.item.alias)
+}
+
+function setActive() {
+  console.log(active.value)
+  if (!active.value) cs.setProjectActive(props.item.alias)
+  else cs.setProjectInactive(props.item.alias)
+}
 </script>
 
 <style scoped lang="postcss">
 .item {
   @apply border border-slate-200 basis-[31%] shadow rounded p-2 cursor-pointer;
   @apply flex flex-col items-center;
-  @apply h-fit;
+  @apply bg-white;
+}
+.item-small {
+  @apply hover:max-h-fit max-h-[280px] h-fit;
 }
 
-.item:active {
-  @apply basis-1/3 shadow-lg;
+.item-hovered {
+  @apply border-2 shadow-lg border-green-600;
 }
 
 hr.divider {
   @apply h-px my-2 bg-gray-200 border-0 dark:bg-gray-700 w-full;
 }
 
+.img-container {
+  @apply w-full max-h-full flex items-center overflow-hidden;
+}
+
 img.thumbnail {
-  @apply max-w-full p-4 max-h-96;
+  @apply w-full p-4 h-fit;
 }
 
 .footer {
@@ -71,14 +113,14 @@ img.thumbnail {
 }
 
 .footer-l {
-  @apply justify-self-start flex flex-row basis-1/4 justify-start items-center space-x-2;
+  @apply justify-self-start flex flex-row justify-start items-center space-x-2;
 }
 
 .link {
-  @apply justify-self-center basis-1/3;
+  @apply justify-self-center basis-1/3 flex items-center justify-center;
 }
 
 .footer-r {
-  @apply justify-self-end flex flex-row basis-1/4 justify-end items-center space-x-2;
+  @apply justify-self-end flex flex-row justify-end items-center space-x-2;
 }
 </style>

@@ -5,8 +5,8 @@ export interface PortfolioItem {
   summary: string
   thumbnail: string
   footers: {
-    left: { icon: StatsIconType; text: string }
-    right: { icon: StatsIconType; text: string }
+    left: { icon: StatsIconType; text: string } | undefined
+    right: { icon: StatsIconType; text: string } | undefined
   }
   link: { type: 'internal' | 'external'; path: string } | null
 }
@@ -17,5 +17,7 @@ export interface ProjectItem extends PortfolioItem {
 
 export enum StatsIconType {
   'upvotes' = 'upvotes',
-  'shares' = 'shares'
+  'shares' = 'shares',
+  'views' = 'views',
+  'users' = 'users'
 }

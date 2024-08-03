@@ -13,9 +13,9 @@ defineProps<{
 
 <style scoped lang="postcss">
 .portfolio-content {
-  @apply flex flex-col items-center overflow-auto h-fit w-full;
+  @apply flex flex-col items-center h-fit w-full;
 }
 h1 {
-  @apply font-bold text-3xl pb-4;
+  @apply font-bold text-3xl;
 }
 </style>
