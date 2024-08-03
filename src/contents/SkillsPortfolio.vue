@@ -36,7 +36,7 @@ const visibleTooltip: Ref<string | undefined> = ref(undefined)
 </script>
 
 <template>
-  <PortfolioContent title="Skills">
+  <PortfolioContent title="Skills" id="skills">
     <VueWordCloud class="wordcloud" style="width: 640px; height: 128px" :words="cs.skillWords">
       <template v-slot="{ text, weight, word }">
         <div
@@ -48,6 +48,8 @@ const visibleTooltip: Ref<string | undefined> = ref(undefined)
           @mouseleave="onWordLeave(word[0])"
         >
           {{ text }}
+        </div>
+        <Teleport to="#skills">
           <div
             class="tooltip"
             v-if="visibleTooltip === word[0]"
@@ -56,7 +58,7 @@ const visibleTooltip: Ref<string | undefined> = ref(undefined)
           >
             Tooltip
           </div>
-        </div>
+        </Teleport>
       </template>
     </VueWordCloud>
   </PortfolioContent>
@@ -67,15 +69,15 @@ const visibleTooltip: Ref<string | undefined> = ref(undefined)
   @apply h-[320px] w-[320px] !z-0;
 }
 .word {
-  @apply cursor-pointer relative !z-0 !flex;
+  @apply cursor-pointer relative !z-0 !flex hover:text-highlight;
 }
 .tooltip {
-  @apply absolute !z-[100] bottom-0 left-[105%] text-sm bg-white;
+  @apply !z-[100] text-sm;
 }
 .word-active {
-  @apply text-dark;
+  @apply text-dark dark:text-light;
 }
 .word-inactive {
-  @apply text-slate-400;
+  @apply text-semidark;
 }
 </style>

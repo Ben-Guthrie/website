@@ -84,20 +84,20 @@ function setActive() {
 
 <style scoped lang="postcss">
 .item {
-  @apply border border-slate-200 basis-[31%] shadow rounded p-2 cursor-pointer;
+  @apply border border-semidark basis-[31%] shadow rounded p-2 cursor-pointer;
   @apply flex flex-col items-center gap-2;
-  @apply bg-white;
+  @apply bg-light dark:bg-dark dark:text-highlight;
 }
 .item-small {
   @apply max-h-[280px] h-fit;
 }
 
 .item-hovered {
-  @apply border-2 shadow-lg border-highlight transition-all ease-in-out;
+  @apply border-2 border-highlight transition-all ease-in-out;
 }
 
 hr.divider {
-  @apply h-px my-2 bg-gray-200 border-0 dark:bg-gray-700 w-full;
+  @apply h-[0.5px] my-2 bg-semidark border-0 w-full;
 }
 
 .img-container {
@@ -115,11 +115,12 @@ img.thumbnail {
   @apply object-contain;
 }
 .item-small:hover .img-container {
-  @apply p-1 border border-slate-200 transition-all ease-in;
+  @apply p-1 transition-all ease-in;
 }
 
 .footer {
   @apply flex flex-row w-full justify-between items-center;
+  @apply text-dark dark:text-light;
 }
 
 .footer-l {

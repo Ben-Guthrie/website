@@ -6,9 +6,12 @@ export default {
     extend: {
       colors: {
         dark: '#02343F',
-        highlight: '#F0EDCC'
+        highlight: '#F0EDCC',
+        light: '#fafaf9',
+        semidark: '#80969c'
       }
     }
   },
+  darkMode: 'selector',
   plugins: []
 }

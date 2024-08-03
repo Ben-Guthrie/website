@@ -53,12 +53,12 @@ function isItemVisible(alias: string) {
 
 .filter-item {
   @apply cursor-pointer p-2 h-fit;
-  @apply rounded-lg border-2 border-stone-300;
-  @apply hover:border-highlight hover:bg-highlight;
+  @apply rounded-lg border-2 border-semidark;
+  @apply hover:border-highlight hover:bg-highlight dark:hover:text-dark;
 }
 
 .active {
-  @apply bg-highlight border-highlight;
+  @apply bg-highlight border-highlight text-dark;
 }
 
 .portfolio {
