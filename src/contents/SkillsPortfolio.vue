@@ -73,7 +73,7 @@ const visibleTooltip: Ref<string | undefined> = ref(undefined)
   @apply absolute !z-[100] bottom-0 left-[105%] text-sm bg-white;
 }
 .word-active {
-  @apply text-black;
+  @apply text-dark;
 }
 .word-inactive {
   @apply text-slate-400;

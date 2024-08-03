@@ -14,6 +14,6 @@ import ModalPopup from '@/contents/ModalPopup.vue'
 
 <style scoped lang="postcss">
 .main {
-  @apply max-w-[1080px] h-full w-max;
+  @apply max-w-[1080px] h-full w-full;
 }
 </style>

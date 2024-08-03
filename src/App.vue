@@ -8,9 +8,9 @@ import HomeView from './views/HomeView.vue'
       <div class="navbar">
         <div class="name">Ben Guthrie</div>
         <nav>
-          <span>Projects</span>
-          <span>Skills</span>
-          <span>About</span>
+          <div class="nav-option">Projects</div>
+          <div class="nav-option">Skills</div>
+          <div class="nav-option">About</div>
         </nav>
       </div>
     </header>
@@ -26,14 +26,14 @@ import HomeView from './views/HomeView.vue'
   @apply w-screen h-screen;
   @apply bg-stone-100;
   @apply fixed top-0 left-0;
-  @apply flex flex-nowrap flex-col items-center;
+  @apply flex flex-nowrap flex-col items-center text-dark;
 }
 
 header {
   @apply w-full h-16;
   @apply border-b-2 border-slate-800 justify-center;
   @apply flex flex-nowrap;
-  @apply text-xl;
+  @apply text-xl text-dark;
 }
 
 header .navbar {
@@ -46,8 +46,12 @@ header .name {
 }
 
 nav {
-  @apply flex flex-row justify-between items-center pr-2;
+  @apply flex flex-row items-center pr-2;
   @apply space-x-2 md:space-x-4 xl:space-x-6 h-full;
+}
+
+nav .nav-option {
+  @apply h-full px-2 hover:bg-highlight content-center cursor-pointer;
 }
 
 .content {

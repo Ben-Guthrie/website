@@ -18,8 +18,8 @@
 
     <span class="summary" v-show="full">{{ item.summary }}</span>
 
-    <hr class="divider" v-show="full || hovered" />
-    <div class="w-full overflow-hidden" v-if="full || hovered">
+    <hr class="divider" v-show="full" />
+    <div class="w-full overflow-hidden" v-if="full">
       <slot />
     </div>
 
@@ -85,15 +85,15 @@ function setActive() {
 <style scoped lang="postcss">
 .item {
   @apply border border-slate-200 basis-[31%] shadow rounded p-2 cursor-pointer;
-  @apply flex flex-col items-center;
+  @apply flex flex-col items-center gap-2;
   @apply bg-white;
 }
 .item-small {
-  @apply hover:max-h-fit max-h-[280px] h-fit;
+  @apply max-h-[280px] h-fit;
 }
 
 .item-hovered {
-  @apply border-2 shadow-lg border-green-600;
+  @apply border-2 shadow-lg border-highlight transition-all ease-in-out;
 }
 
 hr.divider {
@@ -101,11 +101,21 @@ hr.divider {
 }
 
 .img-container {
-  @apply w-full max-h-full flex items-center overflow-hidden;
+  @apply w-full h-full;
+}
+
+.item-small .img-container {
+  @apply w-full h-[200px] min-h-0;
 }
 
 img.thumbnail {
-  @apply w-full p-4 h-fit;
+  @apply w-full h-full object-cover object-center;
+}
+.item-small:hover img.thumbnail {
+  @apply object-contain;
+}
+.item-small:hover .img-container {
+  @apply p-1 border border-slate-200 transition-all ease-in;
 }
 
 .footer {

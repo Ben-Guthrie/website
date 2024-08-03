@@ -16,6 +16,7 @@
       <ProjectPortfolioItem
         v-for="project in cs.projects"
         :key="project.alias"
+        :full="false"
         :item="project"
         v-show="isItemVisible(project.alias)"
       />
@@ -52,11 +53,12 @@ function isItemVisible(alias: string) {
 
 .filter-item {
   @apply cursor-pointer p-2 h-fit;
-  @apply rounded-lg border-2 border-slate-400;
+  @apply rounded-lg border-2 border-stone-300;
+  @apply hover:border-highlight hover:bg-highlight;
 }
 
 .active {
-  @apply border-green-600;
+  @apply bg-highlight border-highlight;
 }
 
 .portfolio {
