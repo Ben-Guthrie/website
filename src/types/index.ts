@@ -8,7 +8,12 @@ export interface PortfolioItem {
     left: { icon: StatsIconType; text: string } | undefined
     right: { icon: StatsIconType; text: string } | undefined
   }
-  link: { type: 'internal' | 'external'; path: string } | null
+  link: Link | null
+}
+
+export interface Link {
+  type: 'internal' | 'external'
+  path: string
 }
 
 export interface ProjectItem extends PortfolioItem {

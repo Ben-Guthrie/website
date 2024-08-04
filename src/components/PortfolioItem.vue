@@ -32,8 +32,15 @@
           <span> {{ item.footers.left.text }} </span>
         </div>
       </div>
-      <div class="link" v-if="item.link" v-show="full">
-        <div>See More</div>
+      <div class="basis-1/3 flex justify-center">
+        <div class="link" v-if="item.link" v-on:click.stop @click="followLink(item.link)">
+          <div class="link-text">
+            <span class="max-lg:hidden">See </span>
+            <span class="lg:hidden" v-if="full">See </span>
+            <span>More</span>
+          </div>
+          <IconExternal class="text-dark" v-if="item.link.type === 'external'" />
+        </div>
       </div>
 
       <div class="basis-1/4">
@@ -47,8 +54,9 @@
 </template>
 
 <script setup lang="ts">
-import type { PortfolioItem, ProjectItem } from '@/types'
+import type { Link, PortfolioItem, ProjectItem } from '@/types'
 import StatsIcon from './icons/StatsIcon.vue'
+import IconExternal from './icons/IconExternal.vue'
 import { computed, ref } from 'vue'
 import { useContentsStore } from '@/stores/contents'
 
@@ -80,6 +88,12 @@ function setActive() {
   if (!active.value) cs.setProjectActive(props.item.alias)
   else cs.setProjectInactive(props.item.alias)
 }
+
+function followLink(link: Link) {
+  if (link.type === 'external') {
+    window.location.href = link.path
+  }
+}
 </script>
 
 <style scoped lang="postcss">
@@ -109,7 +123,7 @@ hr.divider {
 }
 
 img.thumbnail {
-  @apply w-full h-full object-cover object-center;
+  @apply w-full h-full object-cover object-center px-2 md:px-4 lg:px-6;
 }
 .item-small:hover img.thumbnail {
   @apply object-contain;
@@ -124,14 +138,21 @@ img.thumbnail {
 }
 
 .footer-l {
-  @apply justify-self-start flex flex-row justify-start items-center space-x-2;
+  @apply justify-self-start flex flex-row justify-start items-center space-x-1 pr-2;
 }
 
 .link {
-  @apply justify-self-center basis-1/3 flex items-center justify-center;
+  @apply w-fit flex gap-2 items-center justify-center px-1;
+  @apply rounded-full bg-highlight border-4 border-highlight;
+  @apply text-dark dark:text-dark dark:bg-highlight cursor-pointer;
+  @apply transform hover:scale-110 hover:bg-highlight hover:text-dark;
+}
+
+.link-text {
+  @apply text-nowrap;
 }
 
 .footer-r {
-  @apply justify-self-end flex flex-row justify-end items-center space-x-2;
+  @apply justify-self-end flex flex-row justify-end items-center space-x-1 pl-2;
 }
 </style>

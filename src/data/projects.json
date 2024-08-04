@@ -31,7 +31,7 @@
     "footers": {
       "left": { "icon": "users", "text": "1k" }
     },
-    "link": { "type": "external", "path": "lake-louise.steepdeep.ski" }
+    "link": { "type": "external", "path": "https://lake-louise.steepdeep.ski" }
   },
   {
     "name": "Satellite visualization",
