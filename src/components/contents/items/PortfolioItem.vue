@@ -10,7 +10,7 @@
       item.name
     }}</span>
 
-    <div class="img-container">
+    <div class="img-container" :class="{ 'max-h-[40%]': full }">
       <img :src="'img/' + item.thumbnail" class="thumbnail" />
     </div>
 
@@ -33,14 +33,19 @@
         </div>
       </div>
       <div class="basis-1/3 flex justify-center">
-        <div class="link" v-if="item.link" v-on:click.stop @click="followLink(item.link)">
+        <button
+          class="btn btn-primary"
+          v-if="item.link"
+          v-on:click.stop
+          @click="followLink(item.link)"
+        >
           <div class="link-text">
             <span class="max-lg:hidden">See </span>
             <span class="lg:hidden" v-if="full">See </span>
             <span>More</span>
           </div>
           <IconExternal class="text-dark" v-if="item.link.type === 'external'" />
-        </div>
+        </button>
       </div>
 
       <div class="basis-1/4">
@@ -55,8 +60,8 @@
 
 <script setup lang="ts">
 import type { Link, PortfolioItem, ProjectItem } from '@/types'
-import StatsIcon from './icons/StatsIcon.vue'
-import IconExternal from './icons/IconExternal.vue'
+import StatsIcon from '../../icons/StatsIcon.vue'
+import IconExternal from '../../icons/IconExternal.vue'
 import { computed, ref } from 'vue'
 import { useContentsStore } from '@/stores/contents'
 
@@ -84,7 +89,6 @@ function setNotHovered() {
 }
 
 function setActive() {
-  console.log(active.value)
   if (!active.value) cs.setProjectActive(props.item.alias)
   else cs.setProjectInactive(props.item.alias)
 }
@@ -98,10 +102,10 @@ function followLink(link: Link) {
 
 <style scoped lang="postcss">
 .item {
-  @apply border border-semidark basis-[31%] shadow rounded p-2 cursor-pointer;
-  @apply flex flex-col items-center gap-2;
-  @apply bg-light dark:bg-dark dark:text-highlight;
+  @apply border border-accent basis-[31%] shadow rounded p-2 cursor-pointer;
+  @apply flex flex-col items-center gap-2 bg-base-100 text-base-content;
 }
+
 .item-small {
   @apply max-h-[280px] h-fit;
 }
@@ -111,11 +115,11 @@ function followLink(link: Link) {
 }
 
 hr.divider {
-  @apply h-[0.5px] my-2 bg-semidark border-0 w-full;
+  @apply h-[0.5px] my-1 bg-semidark border-0 w-full;
 }
 
 .img-container {
-  @apply w-full h-full;
+  @apply w-fit h-full;
 }
 
 .item-small .img-container {

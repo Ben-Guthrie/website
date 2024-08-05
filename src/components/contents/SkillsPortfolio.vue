@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { useContentsStore } from '@/stores/contents'
-import PortfolioContent from '../components/PortfolioContent.vue'
+import PortfolioContent from './PortfolioContent.vue'
 import VueWordCloud from 'vuewordcloud'
 import { ref, watch, type Ref } from 'vue'
 
 const cs = useContentsStore()
 
-function onWordClick(word: string) {
-  console.log(word)
-}
+function onWordClick(word: string) {}
 function onWordHover(word: string) {
   cs.setHoveredSkill(word)
   visibleTooltip.value = word

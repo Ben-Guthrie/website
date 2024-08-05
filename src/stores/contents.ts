@@ -56,7 +56,6 @@ export const useContentsStore = defineStore('contents', () => {
   const skillWords = computed(() =>
     Object.entries(skills.value).reduce(
       (accumulator, [name, skill]) => {
-        console.log(skill.total)
         accumulator.push([name, skill.total || 0])
         return accumulator
       },
@@ -76,7 +75,6 @@ export const useContentsStore = defineStore('contents', () => {
     } else {
       filters.value.push(tag)
     }
-    console.log(filters.value)
   }
 
   const visibleProjects = computed(() => {
@@ -90,6 +88,8 @@ export const useContentsStore = defineStore('contents', () => {
       projects.value[index].tags.some((tag) => isFilterActive(tag))
     )
   })
+
+  console.log(visibleProjects)
 
   const activeProject: Ref<string | undefined> = ref()
 

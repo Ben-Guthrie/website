@@ -1,15 +1,18 @@
 <template>
   <div class="main">
     <ProjectsPortfolio />
-    <SkillsPortfolio />
+    <SkillsPortfolio v-if="!theme.isMobile" />
   </div>
   <ModalPopup class="fixed top-0 left-0 right-0 bottom-0" />
 </template>
 
 <script setup lang="ts">
-import ProjectsPortfolio from '@/contents/ProjectsPortfolio.vue'
-import SkillsPortfolio from '@/contents/SkillsPortfolio.vue'
-import ModalPopup from '@/contents/ModalPopup.vue'
+import ProjectsPortfolio from '@/components/contents/ProjectsPortfolio.vue'
+import SkillsPortfolio from '@/components/contents/SkillsPortfolio.vue'
+import ModalPopup from '@/components/contents/ModalPopup.vue'
+import { useThemeStore } from '@/stores'
+
+const theme = useThemeStore()
 </script>
 
 <style scoped lang="postcss">

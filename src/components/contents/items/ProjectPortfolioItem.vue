@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import type { ProjectItem } from '@/types'
-import PortfolioItem from './PortfolioItem.vue'
-import LevelIcon from './icons/LevelIcon.vue'
+import PortfolioItem from '../../contents/items/PortfolioItem.vue'
+import LevelIcon from '../../icons/LevelIcon.vue'
 import { computed } from 'vue'
 
 const props = defineProps<{

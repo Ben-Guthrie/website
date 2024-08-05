@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PortfolioContent from '../components/PortfolioContent.vue'
+import PortfolioContent from './PortfolioContent.vue'
 import ProjectsList from './ProjectsList.vue'
 </script>
 

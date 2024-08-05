@@ -1,11 +1,13 @@
 <template>
-  <div class="portfolio-content">
+  <div class="portfolio-content" :class="{ '!h-full': useThemeStore().isMobile }">
     <h1>{{ title }}</h1>
     <slot> </slot>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useThemeStore } from '@/stores'
+
 defineProps<{
   title: String
 }>()

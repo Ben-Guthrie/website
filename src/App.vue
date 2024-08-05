@@ -1,13 +1,21 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
 import DarkModeIcon from './components/icons/DarkModeIcon.vue'
 import { useThemeStore } from './stores'
 import HomeView from './views/HomeView.vue'
 
 const theme = useThemeStore()
+
+onMounted(() => window.addEventListener('resize', theme.handleResizeWindow))
+onUnmounted(() => window.removeEventListener('resize', theme.handleResizeWindow))
 </script>
 
 <template>
-  <div class="page" :class="{ dark: theme.darkMode }">
+  <div
+    class="page"
+    :class="{ dark: theme.darkMode }"
+    :data-theme="theme.darkMode ? 'dark' : 'light'"
+  >
     <header>
       <div class="navbar">
         <div class="name">Ben Guthrie</div>
@@ -29,11 +37,9 @@ const theme = useThemeStore()
 
 <style lang="postcss" scoped>
 .page {
-  @apply w-screen h-screen;
-  @apply bg-light dark:bg-dark;
+  @apply w-screen h-screen bg-base-100;
   @apply fixed top-0 left-0;
   @apply flex flex-nowrap flex-col items-center text-dark;
-  @apply dark:bg-dark dark:text-light;
 }
 
 header {

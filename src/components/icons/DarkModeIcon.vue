@@ -12,7 +12,7 @@ defineProps<{
 
 <template>
   <div @click="theme.toggleDarkMode">
-    <IconSun :size="size" v-if="theme.darkMode" />
-    <IconMoon :size="size" v-else />
+    <IconMoon :size="size" v-if="theme.darkMode" />
+    <IconSun :size="size" v-else />
   </div>
 </template>

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import ProjectPortfolioItem from '@/components/ProjectPortfolioItem.vue'
+import ProjectPortfolioItem from '@/components/contents/items/ProjectPortfolioItem.vue'
 import { useContentsStore } from '@/stores/contents'
 import { computed } from 'vue'
 
