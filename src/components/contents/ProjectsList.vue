@@ -24,6 +24,8 @@
     <div
       v-else
       class="carousel carousel-center bg-neutral rounded-box max-w-md space-x-2 p-4 h-full flex items-center"
+      @scroll="() => (scrolling = true)"
+      @scrollend="() => (scrolling = false)"
     >
       <div
         class="carousel-item relative w-fit h-fit flex justify-center"
@@ -44,11 +46,13 @@
               '#' + cs.visibleProjects[index - 1 >= 0 ? index - 1 : cs.visibleProjects.length - 1]
             "
             class="btn btn-circle"
+            v-if="!scrolling"
             >❮</a
           >
           <a
             :href="'#' + cs.visibleProjects[index + 1 < cs.visibleProjects.length ? index + 1 : 0]"
             class="btn btn-circle"
+            v-if="!scrolling"
             >❯</a
           >
         </div>
@@ -61,9 +65,12 @@
 import ProjectPortfolioItem from '@/components/contents/items/ProjectPortfolioItem.vue'
 import { useThemeStore } from '@/stores'
 import { projectTags, useContentsStore } from '@/stores/contents'
+import { ref } from 'vue'
 
 const cs = useContentsStore()
 const theme = useThemeStore()
+
+const scrolling = ref(false)
 
 function setFilter(tag: string) {
   cs.setFilter(tag)
