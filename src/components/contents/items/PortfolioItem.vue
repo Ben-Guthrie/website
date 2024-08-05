@@ -1,57 +1,68 @@
 <template>
   <div
-    class="item"
-    :class="{ 'item-hovered': highlighted, 'item-small': !full }"
-    @mouseover="full ? null : setHovered()"
-    @mouseleave="full ? null : setNotHovered()"
-    @click="full ? null : setActive()"
+    class="item-container"
+    :class="{ 'item-hovered': highlighted, 'item-small': !full, 'overflow-auto': full }"
   >
-    <span class="text-md md:text-md font-semibold" :class="{ 'text-xl font-bold': full }">{{
-      item.name
-    }}</span>
+    <div
+      class="item"
+      :class="{ 'h-fit': full, 'h-full': !full }"
+      @mouseover="full ? null : setHovered()"
+      @mouseleave="full ? null : setNotHovered()"
+      @click="full ? null : setActive()"
+    >
+      <span
+        class="text-md md:text-md font-semibold"
+        :class="{ 'text-xl font-bold overflow-auto': full }"
+        >{{ item.name }}</span
+      >
 
-    <div class="img-container" :class="{ 'max-h-[40%]': full }">
-      <img :src="'img/' + item.thumbnail" class="thumbnail" />
-    </div>
-
-    <hr class="divider" v-show="full" />
-
-    <span class="summary" v-show="full">{{ item.summary }}</span>
-
-    <hr class="divider" v-show="full" />
-    <div class="w-full overflow-hidden" v-if="full">
-      <slot />
-    </div>
-
-    <hr class="divider" />
-
-    <div class="footer">
-      <div class="basis-1/4">
-        <div class="footer-l" v-if="item.footers.left !== undefined">
-          <StatsIcon :icon="item.footers.left.icon" />
-          <span> {{ item.footers.left.text }} </span>
-        </div>
+      <div class="img-container">
+        <img
+          :src="'img/' + item.thumbnail"
+          class="thumbnail"
+          :class="{ 'object-contain max-h-[40vh]': full }"
+        />
       </div>
-      <div class="basis-1/3 flex justify-center">
-        <button
-          class="btn btn-primary"
-          v-if="item.link"
-          v-on:click.stop
-          @click="followLink(item.link)"
-        >
-          <div class="link-text">
-            <span class="max-lg:hidden">See </span>
-            <span class="lg:hidden" v-if="full">See </span>
-            <span>More</span>
+
+      <hr class="divider" v-show="full" />
+
+      <span class="summary" v-show="full">{{ item.summary }}</span>
+
+      <hr class="divider" v-show="full" />
+      <div class="w-full overflow-hidden" v-if="full">
+        <slot />
+      </div>
+
+      <hr class="divider" />
+
+      <div class="footer">
+        <div class="basis-1/4 flex-initial">
+          <div class="footer-l" v-if="item.footers.left !== undefined">
+            <StatsIcon :icon="item.footers.left.icon" />
+            <span> {{ item.footers.left.text }} </span>
           </div>
-          <IconExternal class="text-dark" v-if="item.link.type === 'external'" />
-        </button>
-      </div>
+        </div>
+        <div class="basis-1/3 flex-initial flex justify-center">
+          <button
+            class="btn btn-primary"
+            v-if="item.link"
+            v-on:click.stop
+            @click="followLink(item.link)"
+          >
+            <div class="link-text">
+              <span class="max-lg:hidden">See </span>
+              <span class="lg:hidden" v-if="full">See </span>
+              <span>More</span>
+            </div>
+            <IconExternal class="text-dark" v-if="item.link.type === 'external'" />
+          </button>
+        </div>
 
-      <div class="basis-1/4">
-        <div class="footer-r" v-if="item.footers.right !== undefined">
-          <span> {{ item.footers.right.text }}</span>
-          <StatsIcon :icon="item.footers.right.icon" />
+        <div class="basis-1/4 flex-initial">
+          <div class="footer-r" v-if="item.footers.right !== undefined">
+            <span> {{ item.footers.right.text }}</span>
+            <StatsIcon :icon="item.footers.right.icon" />
+          </div>
         </div>
       </div>
     </div>
@@ -101,13 +112,16 @@ function followLink(link: Link) {
 </script>
 
 <style scoped lang="postcss">
+.item-container {
+  @apply border border-accent basis-[31%] flex-grow shadow cursor-pointer h-fit max-h-full;
+}
+
 .item {
-  @apply border border-accent basis-[31%] max-w-[40%] flex-grow shadow p-2 cursor-pointer;
-  @apply flex flex-col items-center gap-2 bg-base-100 text-base-content;
+  @apply w-full flex flex-col items-center bg-base-100 text-base-content p-2 gap-2;
 }
 
 .item-small {
-  @apply max-h-[280px] h-fit;
+  @apply h-64 max-w-[40%];
 }
 
 .item-hovered {
@@ -122,17 +136,17 @@ hr.divider {
   @apply w-fit h-full;
 }
 
-.item-small .img-container {
-  @apply w-full h-[200px] min-h-0;
+.item-small .item .img-container {
+  @apply w-full h-36 min-h-0;
 }
 
 img.thumbnail {
   @apply w-full h-full object-cover object-center px-2 md:px-4 lg:px-6;
 }
-.item-small:hover img.thumbnail {
+.item-small:hover .item img.thumbnail {
   @apply object-contain;
 }
-.item-small:hover .img-container {
+.item-small:hover .item .img-container {
   @apply p-1 transition-all ease-in;
 }
 

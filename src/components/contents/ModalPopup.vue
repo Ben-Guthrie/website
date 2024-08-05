@@ -17,9 +17,9 @@ const item = computed(() =>
 
 <style scoped lang="postcss">
 .mask {
-  @apply h-full w-full z-10 backdrop-blur-md flex items-center justify-center;
+  @apply h-screen w-screen z-10 backdrop-blur-md flex items-center justify-center;
 }
 .popup {
-  @apply cursor-auto;
+  @apply cursor-auto max-h-[90%] max-w-96;
 }
 </style>

@@ -23,12 +23,12 @@
     </div>
     <div
       v-else
-      class="carousel carousel-center bg-neutral rounded-box max-w-md space-x-2 p-4 h-full flex items-center"
+      class="carousel carousel-center bg-neutral rounded-box max-w-md gap-4 p-4 h-full flex items-center"
       @scroll="() => (scrolling = true)"
       @scrollend="() => (scrolling = false)"
     >
       <div
-        class="carousel-item relative w-fit h-fit flex justify-center"
+        class="carousel-item relative w-full h-fit max-h-full flex justify-center overflow-auto"
         v-for="(alias, index) in cs.visibleProjects"
         :key="alias"
       >
@@ -41,20 +41,31 @@
         <div
           class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between"
         >
-          <a
-            :href="
-              '#' + cs.visibleProjects[index - 1 >= 0 ? index - 1 : cs.visibleProjects.length - 1]
+          <div
+            class="btn btn-circle self-start"
+            v-if="!scrolling && index - 1 >= 0"
+            @click="
+              () =>
+                handleCarouselButtonClick(
+                  cs.visibleProjects[index - 1 >= 0 ? index - 1 : cs.visibleProjects.length - 1]
+                )
             "
-            class="btn btn-circle"
-            v-if="!scrolling"
-            >❮</a
           >
-          <a
-            :href="'#' + cs.visibleProjects[index + 1 < cs.visibleProjects.length ? index + 1 : 0]"
-            class="btn btn-circle"
-            v-if="!scrolling"
-            >❯</a
+            ❮
+          </div>
+          <div v-else />
+          <div
+            class="btn btn-circle self-end"
+            v-if="!scrolling && index + 1 < cs.visibleProjects.length"
+            @click="
+              () =>
+                handleCarouselButtonClick(
+                  cs.visibleProjects[index + 1 < cs.visibleProjects.length ? index + 1 : 0]
+                )
+            "
           >
+            ❯
+          </div>
         </div>
       </div>
     </div>
@@ -65,7 +76,7 @@
 import ProjectPortfolioItem from '@/components/contents/items/ProjectPortfolioItem.vue'
 import { useThemeStore } from '@/stores'
 import { projectTags, useContentsStore } from '@/stores/contents'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const cs = useContentsStore()
 const theme = useThemeStore()
@@ -78,6 +89,14 @@ function setFilter(tag: string) {
 
 function isItemVisible(alias: string) {
   return cs.visibleProjects.includes(alias)
+}
+
+async function handleCarouselButtonClick(scrollToId: string) {
+  const element = document.getElementById(scrollToId)
+  element?.scrollIntoView({
+    block: 'start',
+    behavior: 'smooth'
+  })
 }
 </script>
 
