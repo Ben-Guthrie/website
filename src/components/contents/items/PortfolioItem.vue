@@ -102,7 +102,7 @@ function followLink(link: Link) {
 
 <style scoped lang="postcss">
 .item {
-  @apply border border-accent basis-[31%] shadow rounded p-2 cursor-pointer;
+  @apply border border-accent basis-[31%] max-w-[40%] flex-grow shadow p-2 cursor-pointer;
   @apply flex flex-col items-center gap-2 bg-base-100 text-base-content;
 }
 
@@ -111,7 +111,7 @@ function followLink(link: Link) {
 }
 
 .item-hovered {
-  @apply border-2 border-highlight transition-all ease-in-out;
+  @apply border-2 rounded border-highlight transition-all ease-in-out;
 }
 
 hr.divider {

@@ -26,12 +26,12 @@
       class="carousel carousel-center bg-neutral rounded-box max-w-md space-x-2 p-4 h-full flex items-center"
     >
       <div
-        class="carousel-item relative w-fit h-full flex justify-center"
+        class="carousel-item relative w-fit h-fit flex justify-center"
         v-for="(alias, index) in cs.visibleProjects"
         :key="alias"
       >
         <ProjectPortfolioItem
-          class="min-w-[80%] w-[80%]"
+          class="min-w-[80%] w-[80%] h-fit"
           :item="cs.projectsDict[alias]"
           :full="true"
           :id="alias"
