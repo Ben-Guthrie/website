@@ -1,7 +1,11 @@
 <template>
   <div
     class="item-container"
-    :class="{ 'item-hovered': highlighted, 'item-small': !full, 'overflow-auto': full }"
+    :class="{
+      'item-hovered': highlighted,
+      'item-small cursor-pointer': !full,
+      'overflow-autoo': full
+    }"
   >
     <div
       class="item"
@@ -113,7 +117,7 @@ function followLink(link: Link) {
 
 <style scoped lang="postcss">
 .item-container {
-  @apply border border-accent basis-[31%] flex-grow shadow cursor-pointer h-fit max-h-full;
+  @apply border border-accent basis-[31%] flex-grow shadow h-fit max-h-full;
 }
 
 .item {

@@ -23,8 +23,8 @@ export default {
           primary: '#F0EDCC',
           'primary-content': '#02343F',
           'base-content': '#02343F',
-          accent: '#02343F',
-          secondary: '#02343F',
+          secondary: '#4D4D80',
+          accent: '#DD8649',
           neutral: '#80969c'
         }
       },
@@ -34,8 +34,8 @@ export default {
           'primary-content': '#02343F',
           'base-100': '#02343F',
           'base-content': '#fafaf9',
-          accent: '#F0EDCC',
-          secondary: '#02343F',
+          secondary: '#DD8649',
+          accent: '#4D4D80',
           neutral: '#80969c'
         }
       },

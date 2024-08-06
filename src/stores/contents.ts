@@ -77,6 +77,10 @@ export const useContentsStore = defineStore('contents', () => {
     }
   }
 
+  function clearFilter() {
+    filters.value = []
+  }
+
   const visibleProjects = computed(() => {
     const projectAliases = projects.value.map((project) => project.alias)
     // if nothing is filtered, return all
@@ -170,10 +174,12 @@ export const useContentsStore = defineStore('contents', () => {
     visibleProjects,
     highlightedProjects,
     visibleSkills,
+    filters,
     activeProject,
     moveProjectToStart,
     isFilterActive,
     setFilter,
+    clearFilter,
     setProjectActive,
     setProjectInactive,
     isProjectActive,
