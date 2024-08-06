@@ -1,5 +1,6 @@
 import daisyui from 'daisyui'
 import defaultTheme from 'tailwindcss/defaultTheme'
+import typography from '@tailwindcss/typography'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -18,7 +19,7 @@ export default {
       }
     }
   },
-  plugins: [daisyui],
+  plugins: [typography, daisyui],
   daisyui: {
     themes: [
       {
@@ -29,7 +30,8 @@ export default {
           'base-content': '#02343F',
           secondary: '#DD8649',
           accent: '#4D4D80',
-          neutral: '#80969c'
+          neutral: '#80969c',
+          title: '#02343F'
         }
       },
       {
@@ -40,7 +42,8 @@ export default {
           'base-content': '#fafaf9',
           secondary: '#4D4D80',
           accent: '#DD8649',
-          neutral: '#80969c'
+          neutral: '#80969c',
+          title: '#F0EDCC'
         }
       },
       'cupcake',

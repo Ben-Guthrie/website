@@ -26,3 +26,21 @@ export enum StatsIconType {
   'views' = 'views',
   'users' = 'users'
 }
+
+export interface BlogPost {
+  slug: string
+  url: string
+  created: Date
+  published: Date
+  title: string
+  body: string | undefined
+  summary: string
+  featured_image: string
+  seo_title: string
+  author: {
+    first_name: string
+    last_name: string
+    profile_image: string
+  }
+  tags: { slug: string; name: string }[]
+}

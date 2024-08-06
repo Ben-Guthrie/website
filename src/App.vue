@@ -4,6 +4,7 @@ import DarkModeIcon from './components/icons/DarkModeIcon.vue'
 import { useThemeStore } from './stores'
 import BenGuthrie from './components/icons/BenGuthrie.vue'
 import { RouterView } from 'vue-router'
+import router from './router'
 
 const theme = useThemeStore()
 
@@ -19,21 +20,23 @@ onUnmounted(() => window.removeEventListener('resize', theme.handleResizeWindow)
   >
     <header>
       <div class="navbar">
-        <RouterLink to="/">
-          <BenGuthrie class="name"></BenGuthrie>
-        </RouterLink>
+        <BenGuthrie @click="router.replace('/')" class="name cursor-pointer"></BenGuthrie>
         <div class="w-full" />
         <nav>
           <RouterLink to="/projects" class="nav-option">Projects</RouterLink>
           <div class="nav-option text-neutral cursor-auto">Travel</div>
-          <div class="nav-option text-neutral cursor-auto">Blog</div>
+          <RouterLink to="/blog" class="nav-option">Blog</RouterLink>
         </nav>
         <DarkModeIcon class="dark-mode-selector" :size="32" />
       </div>
     </header>
 
     <div class="content">
-      <RouterView />
+      <RouterView v-slot="{ Component, route }">
+        <Transition :name="route.meta.transition as string">
+          <component :is="Component" />
+        </Transition>
+      </RouterView>
     </div>
   </div>
 </template>
@@ -78,5 +81,36 @@ nav .nav-option {
   @apply flex flex-col overflow-auto h-full;
   @apply items-center relative;
   @apply w-full;
+}
+
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.5s ease-out;
+}
+
+.slide-right-enter-to,
+.slide-left-leave-from {
+  position: absolute;
+  right: 0;
+}
+
+.slide-right-enter-from,
+.slide-left-leave-to {
+  position: absolute;
+  right: -100%;
+}
+
+.slide-right-leave-to,
+.slide-left-enter-from {
+  position: absolute;
+  left: -100%;
+}
+
+.slide-right-leave-from,
+.slide-left-enter-to {
+  position: absolute;
+  left: 0;
 }
 </style>
