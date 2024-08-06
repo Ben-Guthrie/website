@@ -2,7 +2,8 @@
 import { onMounted, onUnmounted } from 'vue'
 import DarkModeIcon from './components/icons/DarkModeIcon.vue'
 import { useThemeStore } from './stores'
-import HomeView from './views/HomeView.vue'
+import BenGuthrie from './components/icons/BenGuthrie.vue'
+import { RouterView } from 'vue-router'
 
 const theme = useThemeStore()
 
@@ -18,19 +19,21 @@ onUnmounted(() => window.removeEventListener('resize', theme.handleResizeWindow)
   >
     <header>
       <div class="navbar">
-        <div class="name">Ben Guthrie</div>
+        <RouterLink to="/">
+          <BenGuthrie class="name"></BenGuthrie>
+        </RouterLink>
         <div class="w-full" />
         <nav>
-          <div class="nav-option">Projects</div>
-          <div class="nav-option">Skills</div>
-          <div class="nav-option">About</div>
+          <RouterLink to="/projects" class="nav-option">Projects</RouterLink>
+          <div class="nav-option text-neutral cursor-auto">Travel</div>
+          <div class="nav-option text-neutral cursor-auto">Blog</div>
         </nav>
         <DarkModeIcon class="dark-mode-selector" :size="32" />
       </div>
     </header>
 
     <div class="content">
-      <HomeView />
+      <RouterView />
     </div>
   </div>
 </template>
@@ -51,11 +54,11 @@ header {
 
 header .navbar {
   @apply max-w-[680px] w-full h-full;
-  @apply flex flex-row items-center flex-nowrap;
+  @apply flex flex-row items-center flex-nowrap px-2;
 }
 
 header .name {
-  @apply text-nowrap pl-2 justify-self-start;
+  @apply inline text-nowrap justify-self-start flex;
 }
 
 nav {

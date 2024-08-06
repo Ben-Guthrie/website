@@ -1,7 +1,7 @@
 <template>
   <div class="drawer min-h-0">
     <input id="filter-drawer" class="drawer-toggle" type="checkbox" />
-    <div class="drawer-content min-h-full">
+    <div class="drawer-content min-h-full grid justify-center">
       <div class="container" :class="{ '!max-h-full h-full': theme.isMobile }">
         <div class="text-base-content" v-if="!theme.isMobile">Filter by type of project</div>
         <div class="filters" v-if="!theme.isMobile">
@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="indicator fixed bottom-8 right-12">
-        <span class="indicator-item badge badge-secondary" v-if="cs.filters.length > 0"></span>
+        <span class="indicator-item badge badge-accent" v-if="cs.filters.length > 0"></span>
         <label for="filter-drawer" v-if="theme.isMobile" class="btn btn-primary drawer-button"
           ><IconFilter
         /></label>
@@ -150,7 +150,7 @@ async function handleCarouselButtonClick(scrollToId: string) {
 }
 
 .portfolio {
-  @apply overflow-auto flex flex-row flex-wrap;
+  @apply overflow-auto grid grid-cols-3;
   @apply justify-around gap-2 overflow-y-auto h-full;
   @apply w-full p-6;
 }

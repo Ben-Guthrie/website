@@ -30,7 +30,7 @@
 
       <hr class="divider" v-show="full" />
 
-      <span class="summary" v-show="full">{{ item.summary }}</span>
+      <p class="summary" v-show="full">{{ item.summary }}</p>
 
       <hr class="divider" v-show="full" />
       <div class="w-full overflow-hidden" v-if="full">
@@ -125,7 +125,7 @@ function followLink(link: Link) {
 }
 
 .item-small {
-  @apply h-64 max-w-[40%];
+  @apply h-64;
 }
 
 .item-hovered {
@@ -138,6 +138,10 @@ hr.divider {
 
 .img-container {
   @apply w-fit h-full;
+}
+
+.summary {
+  @apply px-4;
 }
 
 .item-small .item .img-container {

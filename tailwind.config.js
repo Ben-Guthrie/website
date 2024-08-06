@@ -1,4 +1,5 @@
 import daisyui from 'daisyui'
+import defaultTheme from 'tailwindcss/defaultTheme'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -11,6 +12,9 @@ export default {
         highlight: '#F0EDCC',
         light: '#fafaf9',
         semidark: '#80969c'
+      },
+      fontFamily: {
+        jaro: ['Jaro', ...defaultTheme.fontFamily.sans]
       }
     }
   },
@@ -23,8 +27,8 @@ export default {
           primary: '#F0EDCC',
           'primary-content': '#02343F',
           'base-content': '#02343F',
-          secondary: '#4D4D80',
-          accent: '#DD8649',
+          secondary: '#DD8649',
+          accent: '#4D4D80',
           neutral: '#80969c'
         }
       },
@@ -34,8 +38,8 @@ export default {
           'primary-content': '#02343F',
           'base-100': '#02343F',
           'base-content': '#fafaf9',
-          secondary: '#DD8649',
-          accent: '#4D4D80',
+          secondary: '#4D4D80',
+          accent: '#DD8649',
           neutral: '#80969c'
         }
       },

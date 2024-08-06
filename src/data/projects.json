@@ -3,7 +3,7 @@
     "name": "\"Mambo No. 5\" names analysis",
     "alias": "mambo",
     "tags": ["data"],
-    "summary": "Summary text...",
+    "summary": "25 years after Lou Bega's \"Mambo No. 5\" was released, how have the names of the women mentioned in the song aged? The answer is: not as well as the song.",
     "thumbnail": "mambo.jpg",
     "skills": [
       { "skill": "python", "level": 1 },
@@ -20,7 +20,7 @@
     "name": "Lake Louise Interactive Map",
     "alias": "lakelouise",
     "tags": ["web", "backend"],
-    "summary": "Summary text...",
+    "summary": "Developed an interactive map for the Lake Louise Ski Resort. The map shows lift and run statuses, available amenities and even features geolocation so you can see where you and your friends are on the hill. A custom CMS enables easy creation and editing of data.",
     "thumbnail": "lakelouise.png",
     "skills": [
       { "skill": "vue", "level": 3 },
@@ -37,7 +37,7 @@
     "name": "Satellite visualization",
     "alias": "satvis",
     "tags": ["data", "backend", "ml"],
-    "summary": "Summary text...",
+    "summary": "Built a simulation environment using python and blender to accurate simulate the relative motion between two co-orbiting satellites, providing visual and LiDAR output data. Used to generate synthetic datasets for ML models.",
     "thumbnail": "satvis.png",
     "skills": [
       { "skill": "blender", "level": 3 },

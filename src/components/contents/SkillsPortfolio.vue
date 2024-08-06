@@ -9,7 +9,7 @@ const cs = useContentsStore()
 function onWordClick(word: string) {}
 function onWordHover(word: string) {
   cs.setHoveredSkill(word)
-  visibleTooltip.value = word
+  //visibleTooltip.value = word
 }
 async function onWordLeave(word: string) {
   cs.unsetHoveredSkill(word)
