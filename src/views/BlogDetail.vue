@@ -1,6 +1,6 @@
 <template>
   <article v-if="Object.keys(blogPost).length > 0" class="blogDetail prose prose-stone">
-    <h1 class="text-title">{{ blogPost.title }}</h1>
+    <h1 class="dark:text-primary">{{ blogPost.title }}</h1>
     <div class="flex justify-between">
       <span>{{ blogPost.author.first_name + ' ' + blogPost.author.last_name }}</span>
       <span>{{ new Date(blogPost.created).toISOString().split('T')[0] }}</span>

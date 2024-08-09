@@ -6,7 +6,7 @@
         <div class="text-base-content" v-if="!theme.isMobile">Filter by type of project</div>
         <div class="filters" v-if="!theme.isMobile">
           <button
-            class="btn"
+            class="btn btn-sm"
             :class="{ 'btn-active': cs.isFilterActive(filter.tag) }"
             @click="setFilter(filter.tag)"
             v-for="filter in projectTags"
@@ -135,12 +135,12 @@ async function handleCarouselButtonClick(scrollToId: string) {
 
 <style scoped lang="postcss">
 .container {
-  @apply w-full max-h-[540px] overflow-auto;
+  @apply w-full max-h-[480px] overflow-auto;
   @apply flex flex-col items-center;
 }
 
 .filters {
-  @apply flex flex-row p-4 space-x-2;
+  @apply flex flex-row p-2 gap-2 max-w-[50%];
   @apply overflow-x-auto overflow-y-clip;
   @apply flex-nowrap items-center;
 }

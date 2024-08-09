@@ -14,7 +14,7 @@
       "left": { "icon": "views", "text": "1.5M" },
       "right": { "icon": "shares", "text": "1.8k" }
     },
-    "link": { "type": "internal", "path": "mambo" }
+    "link": { "type": "internal", "path": "/blog/mambo" }
   },
   {
     "name": "Lake Louise Interactive Map",
@@ -32,6 +32,22 @@
       "left": { "icon": "users", "text": "1k" }
     },
     "link": { "type": "external", "path": "https://lake-louise.steepdeep.ski" }
+  },
+  {
+    "name": "TFT win chance predictor",
+    "alias": "metatft",
+    "tags": ["ml", "backend"],
+    "summary": "Designed and trained a custom neural network model for predicting the chance of winning a round in the competitive video game Teamfight Tactics. ",
+    "thumbnail": "metatft.png",
+    "skills": [
+      { "skill": "pytorch", "level": 2 },
+      { "skill": "tensorflow", "level": 2 },
+      { "skill": "datasets", "level": 1 }
+    ],
+    "footers": {
+      "left": { "icon": "users", "text": "100k" }
+    },
+    "link": { "type": "external", "path": "https://www.metatft.com/download" }
   },
   {
     "name": "Satellite visualization",

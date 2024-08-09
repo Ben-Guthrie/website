@@ -79,6 +79,7 @@ import StatsIcon from '../../icons/StatsIcon.vue'
 import IconExternal from '../../icons/IconExternal.vue'
 import { computed, ref } from 'vue'
 import { useContentsStore } from '@/stores/contents'
+import router from '@/router'
 
 const props = defineProps<{
   item: PortfolioItem | ProjectItem
@@ -111,7 +112,7 @@ function setActive() {
 function followLink(link: Link) {
   if (link.type === 'external') {
     window.location.href = link.path
-  }
+  } else router.push(link.path)
 }
 </script>
 

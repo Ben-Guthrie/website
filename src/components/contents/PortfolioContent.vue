@@ -18,7 +18,7 @@ defineProps<{
   @apply flex flex-col items-center h-fit w-full;
 }
 h1 {
-  @apply font-bold text-3xl pb-4 text-dark dark:text-highlight;
+  @apply font-bold text-3xl pb-3 text-dark dark:text-highlight;
   @apply underline underline-offset-8 decoration-dark;
 }
 .portfolio-content:hover h1 {
