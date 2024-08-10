@@ -93,8 +93,6 @@ export const useContentsStore = defineStore('contents', () => {
     )
   })
 
-  console.log(visibleProjects)
-
   const activeProject: Ref<string | undefined> = ref()
 
   function setProjectActive(alias: string) {

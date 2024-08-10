@@ -8,8 +8,14 @@ import router from './router'
 
 const theme = useThemeStore()
 
-onMounted(() => window.addEventListener('resize', theme.handleResizeWindow))
-onUnmounted(() => window.removeEventListener('resize', theme.handleResizeWindow))
+onMounted(() => {
+  window.addEventListener('resize', theme.handleResizeWindow)
+  window.addEventListener('scroll', theme.handleScroll)
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', theme.handleResizeWindow)
+  window.removeEventListener('scroll', theme.handleScroll)
+})
 </script>
 
 <template>
@@ -18,7 +24,7 @@ onUnmounted(() => window.removeEventListener('resize', theme.handleResizeWindow)
     :class="{ dark: theme.darkMode }"
     :data-theme="theme.darkMode ? 'dark' : 'light'"
   >
-    <header>
+    <header v-show="theme.showHeader">
       <div class="navbar">
         <BenGuthrie @click="router.replace('/')" class="name cursor-pointer"></BenGuthrie>
         <div class="w-full" />
@@ -43,13 +49,12 @@ onUnmounted(() => window.removeEventListener('resize', theme.handleResizeWindow)
 
 <style lang="postcss" scoped>
 .page {
-  @apply w-screen h-screen bg-base-100;
-  @apply fixed top-0 left-0;
+  @apply bg-base-100;
   @apply flex flex-nowrap flex-col items-center text-dark;
 }
 
 header {
-  @apply w-full h-16;
+  @apply w-full h-16 fixed transition bg-base-100 z-10;
   @apply border-b-2 border-dark dark:border-highlight justify-center;
   @apply flex flex-nowrap;
   @apply text-xl text-dark dark:text-highlight;
@@ -78,7 +83,7 @@ nav .nav-option {
 }
 
 .content {
-  @apply flex flex-col overflow-auto h-full;
+  @apply flex flex-col h-full top-16;
   @apply items-center relative;
   @apply w-full;
 }
