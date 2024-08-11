@@ -1,7 +1,7 @@
 import { ref, computed, type ComputedRef, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import projectsJson from '../data/projects.json'
-import type { ProjectItem } from '@/types'
+import type { BlogPost, ProjectItem } from '@/types'
 
 export const projectTags = [
   { tag: 'data', name: 'Data Analysis' },
@@ -11,6 +11,7 @@ export const projectTags = [
 ]
 
 export const useContentsStore = defineStore('contents', () => {
+  /* ----------- Projects ---------- */
   // list of all projects
   const projects = ref(projectsJson as ProjectItem[])
 
@@ -164,6 +165,17 @@ export const useContentsStore = defineStore('contents', () => {
     })
   }
 
+  /* ------------ Blog ------------ */
+  const blogPosts = ref([] as BlogPost[])
+
+  fetch(
+    `https://api.buttercms.com/v2/posts/?exclude_body=true&auth_token=${import.meta.env.VITE_READ_API_TOKEN}`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      blogPosts.value = data.data
+    })
+
   return {
     projects,
     skills,
@@ -186,6 +198,7 @@ export const useContentsStore = defineStore('contents', () => {
     isProjectHovered,
     setHoveredSkill,
     unsetHoveredSkill,
-    isSkillHovered
+    isSkillHovered,
+    blogPosts
   }
 })

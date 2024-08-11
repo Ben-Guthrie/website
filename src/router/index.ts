@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '@/views/HomeView.vue'
 import ProjectsView from '../views/ProjectsView.vue'
 import BlogHome from '../views/BlogHome.vue'
 import BlogDetail from '@/views/BlogDetail.vue'
+import { useThemeStore } from '@/stores'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,7 +11,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: ProjectsView
+      component: HomeView
     },
     {
       path: '/projects',
@@ -29,7 +31,13 @@ const router = createRouter({
   ]
 })
 
+router.beforeEach(() => {
+  // Show header before changing route
+  useThemeStore().showHeader = true
+})
+
 router.afterEach((to, from) => {
+  // Determine whether to transition left or right, depending on route depth
   if (to.name === 'home') to.meta.transition = 'slide-left'
   else {
     const toDepth = to.path.split('/').length

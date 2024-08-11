@@ -17,7 +17,7 @@
     "link": { "type": "internal", "path": "/blog/mambo" }
   },
   {
-    "name": "Lake Louise Interactive Map",
+    "name": "Interactive Ski Resort Map",
     "alias": "lakelouise",
     "tags": ["web", "backend"],
     "summary": "Developed an interactive map for the Lake Louise Ski Resort. The map shows lift and run statuses, available amenities and even features geolocation so you can see where you and your friends are on the hill. A custom CMS enables easy creation and editing of data.",

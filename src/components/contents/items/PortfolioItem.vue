@@ -47,19 +47,31 @@
           </div>
         </div>
         <div class="basis-1/3 flex-initial flex justify-center">
-          <button
+          <a
+            v-if="item.link && item.link.type === 'external'"
+            :href="item.link.path"
             class="btn btn-primary"
-            v-if="item.link"
             v-on:click.stop
-            @click="followLink(item.link)"
           >
             <div class="link-text">
               <span class="max-lg:hidden">See </span>
               <span class="lg:hidden" v-if="full">See </span>
               <span>More</span>
             </div>
-            <IconExternal class="text-dark" v-if="item.link.type === 'external'" />
-          </button>
+            <IconExternal class="text-dark" />
+          </a>
+          <RouterLink
+            v-else-if="item.link && item.link.type === 'internal'"
+            :to="item.link.path"
+            class="btn btn-primary"
+            v-on:click.stop
+          >
+            <div class="link-text">
+              <span class="max-lg:hidden">See </span>
+              <span class="lg:hidden" v-if="full">See </span>
+              <span>More</span>
+            </div>
+          </RouterLink>
         </div>
 
         <div class="basis-1/4 flex-initial">
@@ -74,12 +86,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Link, PortfolioItem, ProjectItem } from '@/types'
+import type { PortfolioItem, ProjectItem } from '@/types'
 import StatsIcon from '../../icons/StatsIcon.vue'
 import IconExternal from '../../icons/IconExternal.vue'
 import { computed, ref } from 'vue'
 import { useContentsStore } from '@/stores/contents'
-import router from '@/router'
 
 const props = defineProps<{
   item: PortfolioItem | ProjectItem
@@ -108,17 +119,11 @@ function setActive() {
   if (!active.value) cs.setProjectActive(props.item.alias)
   else cs.setProjectInactive(props.item.alias)
 }
-
-function followLink(link: Link) {
-  if (link.type === 'external') {
-    window.location.href = link.path
-  } else router.push(link.path)
-}
 </script>
 
 <style scoped lang="postcss">
 .item-container {
-  @apply border border-accent basis-[31%] flex-grow shadow h-fit max-h-full;
+  @apply border border-neutral basis-[31%] flex-grow shadow h-fit max-h-full;
 }
 
 .item {
@@ -130,7 +135,7 @@ function followLink(link: Link) {
 }
 
 .item-hovered {
-  @apply border-2 rounded border-highlight transition-all ease-in-out;
+  @apply border-4 rounded border-highlight transition-all ease-in-out;
 }
 
 hr.divider {
@@ -160,7 +165,7 @@ img.thumbnail {
 }
 
 .footer {
-  @apply flex flex-row w-full justify-between items-center;
+  @apply grid grid-cols-3 w-full justify-between items-center;
   @apply text-dark dark:text-light;
 }
 

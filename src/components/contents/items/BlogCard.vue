@@ -1,5 +1,9 @@
 <template>
-  <div class="card card-bordered cursor-pointer" @click="$router.push(`/blog/${slug}`)">
+  <div
+    class="card card-bordered cursor-pointer"
+    @click="$router.push(`/blog/${slug}`)"
+    :class="{ 'card-compact': ['sm', 'md'].includes(size) }"
+  >
     <figure>
       <img :src="image" />
     </figure>
@@ -20,6 +24,7 @@ defineProps<{
   summary: string
   authorImage: string
   authorName: string
+  size: 'sm' | 'md' | 'lg'
 }>()
 </script>
 

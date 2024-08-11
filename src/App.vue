@@ -10,11 +10,11 @@ const theme = useThemeStore()
 
 onMounted(() => {
   window.addEventListener('resize', theme.handleResizeWindow)
-  window.addEventListener('scroll', theme.handleScroll)
+  document.getElementById('content')?.addEventListener('scroll', theme.handleScroll)
 })
 onUnmounted(() => {
   window.removeEventListener('resize', theme.handleResizeWindow)
-  window.removeEventListener('scroll', theme.handleScroll)
+  document.getElementById('content')?.removeEventListener('scroll', theme.handleScroll)
 })
 </script>
 
@@ -29,15 +29,19 @@ onUnmounted(() => {
         <BenGuthrie @click="router.replace('/')" class="name cursor-pointer"></BenGuthrie>
         <div class="w-full" />
         <nav>
-          <RouterLink to="/projects" class="nav-option">Projects</RouterLink>
+          <RouterLink to="/projects" class="nav-option" active-class="nav-option-active"
+            >Projects</RouterLink
+          >
           <div class="nav-option text-neutral cursor-auto">Travel</div>
-          <RouterLink to="/blog" class="nav-option">Blog</RouterLink>
+          <RouterLink to="/blog" class="nav-option" active-class="nav-option-active"
+            >Blog</RouterLink
+          >
         </nav>
         <DarkModeIcon class="dark-mode-selector" :size="32" />
       </div>
     </header>
 
-    <div class="content">
+    <div class="content" id="content">
       <RouterView v-slot="{ Component, route }">
         <Transition :name="route.meta.transition as string">
           <component :is="Component" />
@@ -49,7 +53,7 @@ onUnmounted(() => {
 
 <style lang="postcss" scoped>
 .page {
-  @apply bg-base-100 h-full w-full min-h-screen;
+  @apply bg-base-100 h-screen w-full min-h-screen;
   @apply flex flex-nowrap flex-col items-center text-dark;
 }
 
@@ -61,7 +65,7 @@ header {
 }
 
 header .navbar {
-  @apply max-w-[680px] w-full h-full;
+  @apply max-w-[600px] w-[90vw] h-full;
   @apply flex flex-row items-center flex-nowrap px-2;
 }
 
@@ -78,6 +82,10 @@ nav .nav-option {
   @apply h-full px-2 hover:bg-highlight dark:hover:text-dark content-center cursor-pointer;
 }
 
+nav .nav-option-active {
+  @apply underline underline-offset-8 decoration-highlight decoration-4;
+}
+
 .dark-mode-selector {
   @apply w-fit text-highlight justify-self-end cursor-pointer;
 }
@@ -85,7 +93,7 @@ nav .nav-option {
 .content {
   @apply flex flex-col h-full pt-16;
   @apply items-center relative;
-  @apply w-full;
+  @apply w-full overflow-auto;
 }
 
 .slide-right-enter-active,

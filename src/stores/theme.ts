@@ -13,7 +13,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   function handleScroll() {
     // Get the current scroll position
-    const currentScrollPosition = window.scrollY || document.documentElement.scrollTop
+    const currentScrollPosition = document.getElementById('content')?.scrollTop || 0
     // Because of momentum scrolling on mobiles, we shouldn't continue if it is less than zero
     if (currentScrollPosition < 0) {
       return

@@ -3,8 +3,10 @@
     <input id="filter-drawer" class="drawer-toggle" type="checkbox" />
     <div class="drawer-content min-h-full grid justify-center">
       <div class="container" :class="{ '!max-h-full h-full': theme.isMobile }">
-        <div class="text-base-content" v-if="!theme.isMobile">Filter by type of project</div>
-        <div class="filters" v-if="!theme.isMobile">
+        <div class="text-base-content" v-if="!theme.isMobile && !preview">
+          Filter by type of project
+        </div>
+        <div class="filters" v-if="!theme.isMobile && !preview">
           <button
             class="btn btn-sm"
             :class="{ 'btn-active': cs.isFilterActive(filter.tag) }"
@@ -18,12 +20,16 @@
 
         <div v-if="!theme.isMobile" class="portfolio">
           <ProjectPortfolioItem
-            v-for="project in cs.projects"
-            :key="project.alias"
+            v-for="alias in projectsToList"
+            :key="alias"
             :full="false"
-            :item="project"
-            v-show="isItemVisible(project.alias)"
+            :item="cs.projectsDict[alias]"
           />
+          <div class="see-more" v-if="preview">
+            <RouterLink class="btn" to="/projects">
+              View all projects <IconArrowRight />
+            </RouterLink>
+          </div>
         </div>
         <div
           v-else
@@ -33,7 +39,7 @@
         >
           <div
             class="carousel-item relative w-full h-fit max-h-full flex justify-center overflow-auto"
-            v-for="(alias, index) in cs.visibleProjects"
+            v-for="(alias, index) in projectsToList"
             :key="alias"
           >
             <ProjectPortfolioItem
@@ -51,7 +57,7 @@
                 @click="
                   () =>
                     handleCarouselButtonClick(
-                      cs.visibleProjects[index - 1 >= 0 ? index - 1 : cs.visibleProjects.length - 1]
+                      projectsToList[index - 1 >= 0 ? index - 1 : projectsToList.length - 1]
                     )
                 "
               >
@@ -60,11 +66,11 @@
               <div v-else />
               <div
                 class="btn btn-circle self-end"
-                v-if="!scrolling && index + 1 < cs.visibleProjects.length"
+                v-if="!scrolling && index + 1 < projectsToList.length"
                 @click="
                   () =>
                     handleCarouselButtonClick(
-                      cs.visibleProjects[index + 1 < cs.visibleProjects.length ? index + 1 : 0]
+                      projectsToList[index + 1 < projectsToList.length ? index + 1 : 0]
                     )
                 "
               >
@@ -72,17 +78,25 @@
               </div>
             </div>
           </div>
+          <div class="see-more carousel-item see-more-carousel" v-if="preview">
+            <RouterLink class="btn" to="/projects">
+              View all projects <IconArrowRight />
+            </RouterLink>
+          </div>
         </div>
       </div>
       <div class="indicator fixed bottom-8 right-12">
         <span class="indicator-item badge badge-accent" v-if="cs.filters.length > 0"></span>
-        <label for="filter-drawer" v-if="theme.isMobile" class="btn btn-primary drawer-button"
+        <label
+          for="filter-drawer"
+          v-if="theme.isMobile && !preview"
+          class="btn btn-primary drawer-button"
           ><IconFilter
         /></label>
       </div>
     </div>
 
-    <div class="drawer-side" v-if="theme.isMobile">
+    <div class="drawer-side" v-if="theme.isMobile && !preview">
       <label for="filter-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
       <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
         <!-- Sidebar content here -->
@@ -107,21 +121,28 @@
 <script setup lang="ts">
 import ProjectPortfolioItem from '@/components/contents/items/ProjectPortfolioItem.vue'
 import IconFilter from '@/components/icons/IconFilter.vue'
+import router from '@/router'
 import { useThemeStore } from '@/stores'
 import { projectTags, useContentsStore } from '@/stores/contents'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import IconArrowRight from '../icons/IconArrowRight.vue'
+
+const props = defineProps<{
+  preview?: boolean
+}>()
 
 const cs = useContentsStore()
 const theme = useThemeStore()
 
 const scrolling = ref(false)
 
+const projectsToList = computed(() => {
+  if (!props.preview) return cs.visibleProjects
+  else return cs.projects.slice(0, 2).map((proj) => proj.alias)
+})
+
 function setFilter(tag: string) {
   cs.setFilter(tag)
-}
-
-function isItemVisible(alias: string) {
-  return cs.visibleProjects.includes(alias)
 }
 
 async function handleCarouselButtonClick(scrollToId: string) {
@@ -153,5 +174,12 @@ async function handleCarouselButtonClick(scrollToId: string) {
   @apply overflow-auto grid grid-cols-3;
   @apply justify-around gap-2 overflow-y-auto h-full;
   @apply w-full p-6;
+}
+
+.see-more {
+  @apply flex items-center justify-start;
+}
+.see-more-carousel {
+  @apply justify-center;
 }
 </style>
