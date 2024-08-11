@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Email from 'vue-material-design-icons/At.vue'
+import Email from 'vue-material-design-icons/EmailOutline.vue'
 </script>
 
 <template>

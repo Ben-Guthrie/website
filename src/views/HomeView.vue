@@ -17,7 +17,7 @@
         </div>
         <div class="flex flex-row gap-2 pt-2">
           <a href="mailto:guthrieb25@gmail.com" class="about-item"
-            ><IconEmail class="pr" /> guthrieb25@gmail.com</a
+            ><IconEmail class="pr-2" /> guthrieb25@gmail.com</a
           >
           <a href="https://github.com/Ben-Guthrie" class="about-item"
             ><IconGithub class="fill-base-content h-full" />/Ben-Guthrie</a
