@@ -49,7 +49,7 @@ onUnmounted(() => {
 
 <style lang="postcss" scoped>
 .page {
-  @apply bg-base-100;
+  @apply bg-base-100 h-full w-full min-h-screen;
   @apply flex flex-nowrap flex-col items-center text-dark;
 }
 
@@ -83,7 +83,7 @@ nav .nav-option {
 }
 
 .content {
-  @apply flex flex-col h-full top-16;
+  @apply flex flex-col h-full pt-16;
   @apply items-center relative;
   @apply w-full;
 }
