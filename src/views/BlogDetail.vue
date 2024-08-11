@@ -30,6 +30,9 @@ fetch(
 </script>
 
 <style lang="postcss">
+.blogDetail {
+  @apply w-full;
+}
 .code {
   @apply collapse collapse-arrow;
 }
