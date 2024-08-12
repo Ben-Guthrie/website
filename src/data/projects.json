@@ -42,7 +42,8 @@
     "skills": [
       { "skill": "pytorch", "level": 2 },
       { "skill": "tensorflow", "level": 2 },
-      { "skill": "datasets", "level": 1 }
+      { "skill": "datasets", "level": 1 },
+      { "skill": "python", "level": 1 }
     ],
     "footers": {
       "left": { "icon": "users", "text": "100k" }
@@ -58,10 +59,29 @@
     "skills": [
       { "skill": "blender", "level": 3 },
       { "skill": "datasets", "level": 3 },
-      { "skill": "python", "level": 2 },
-      { "skill": "simulations", "level": 1 }
+      { "skill": "simulations", "level": 2 },
+      { "skill": "python", "level": 1 }
     ],
     "footers": {},
     "link": { "type": "external", "path": "https://ben-guthrie.github.io/satvis/" }
+  },
+  {
+    "name": "PhD Thesis",
+    "alias": "thesis",
+    "tags": ["data", "ml"],
+    "summary": "Enhancing autonomous vision-based navigation in space with deep learning technologies",
+    "thumbnail": "thesis.png",
+    "skills": [
+      { "skill": "research", "level": 3 },
+      { "skill": "python", "level": 3 },
+      { "skill": "CNNs", "level": 3 },
+      { "skill": "pytorch", "level": 2 },
+      { "skill": "tensorflow", "level": 2 }
+    ],
+    "footers": {},
+    "link": {
+      "type": "external",
+      "path": "https://eprints.soton.ac.uk/470293/1/PhD_Thesis_Final_Submission.pdf"
+    }
   }
 ]

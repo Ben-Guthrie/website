@@ -37,7 +37,7 @@ fetch(
   @apply collapse collapse-arrow;
 }
 .code > .sourceCode {
-  @apply collapse-content text-base-content overflow-x-auto overflow-y-hidden;
+  @apply collapse-content text-base-content bg-base-200 overflow-x-auto overflow-y-hidden;
 }
 .code:focus > .sourceCode {
   @apply visible;
