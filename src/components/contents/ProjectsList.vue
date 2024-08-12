@@ -121,7 +121,6 @@
 <script setup lang="ts">
 import ProjectPortfolioItem from '@/components/contents/items/ProjectPortfolioItem.vue'
 import IconFilter from '@/components/icons/IconFilter.vue'
-import router from '@/router'
 import { useThemeStore } from '@/stores'
 import { projectTags, useContentsStore } from '@/stores/contents'
 import { computed, ref } from 'vue'

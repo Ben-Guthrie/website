@@ -64,7 +64,7 @@
             v-else-if="item.link && item.link.type === 'internal'"
             :to="item.link.path"
             class="btn btn-primary"
-            v-on:click.stop
+            v-on:click.stop="setInactive"
           >
             <div class="link-text">
               <span class="max-lg:hidden">See </span>
@@ -118,6 +118,10 @@ function setNotHovered() {
 function setActive() {
   if (!active.value) cs.setProjectActive(props.item.alias)
   else cs.setProjectInactive(props.item.alias)
+}
+
+function setInactive() {
+  cs.setProjectInactive(props.item.alias)
 }
 </script>
 

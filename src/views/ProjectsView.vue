@@ -2,7 +2,6 @@
   <div class="main">
     <ProjectsPortfolio />
     <SkillsPortfolio v-if="!theme.isMobile" />
-    <ModalPopup class="fixed top-0 left-0 right-0 bottom-0" />
   </div>
 </template>
 

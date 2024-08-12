@@ -5,6 +5,7 @@ import { useThemeStore } from './stores'
 import BenGuthrie from './components/icons/BenGuthrie.vue'
 import { RouterView } from 'vue-router'
 import router from './router'
+import ModalPopup from './components/contents/ModalPopup.vue'
 
 const theme = useThemeStore()
 
@@ -49,6 +50,8 @@ onUnmounted(() => {
       </RouterView>
     </div>
   </div>
+
+  <ModalPopup class="fixed top-0 left-0 right-0 bottom-0" />
 </template>
 
 <style lang="postcss" scoped>

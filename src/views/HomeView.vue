@@ -1,9 +1,7 @@
 <template>
   <div class="home-page">
-    <div class="w-full">
-      <div class="text-center">
-        This site is a work in progress and is constantly being updated.
-      </div>
+    <div class="w-full flex justify-center py-1">
+      <div class="badge">This site is a work in progress and is constantly being updated.</div>
     </div>
     <div class="pb-12">
       <PortfolioContent title="About Me">
