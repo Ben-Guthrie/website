@@ -37,12 +37,20 @@ router.beforeEach(() => {
 })
 
 router.afterEach((to, from) => {
-  // Determine whether to transition left or right, depending on route depth
-  if (to.name === 'home') to.meta.transition = 'slide-left'
+  // Determine the animation to use when changing view
+  // If we aren't coming from an internal route, don't animate
+  if (from.name === undefined) to.meta.transition = undefined
+  // If we're going back to home, slide left
+  else if (to.name === 'home') to.meta.transition = 'slide-left'
+  // If we're going somewhere from home, slide right
+  else if (from.name === 'home') to.meta.transition = 'slide-right'
+  // If we're changing route depth, slide right for deeper and left for shallower
   else {
     const toDepth = to.path.split('/').length
     const fromDepth = from.path.split('/').length
-    to.meta.transition = toDepth < fromDepth ? 'slide-left' : 'slide-right'
+    if (toDepth < fromDepth) to.meta.transition = 'slide-left'
+    else if (toDepth > fromDepth) to.meta.transition = 'slide-right'
+    // If we aren't changing route depth, don't animate the transition
   }
 })
 

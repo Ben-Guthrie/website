@@ -58,10 +58,10 @@ const contents = useContentsStore()
 
 <style scoped lang="postcss">
 .home-page {
-  @apply text-base-content max-w-[1080px];
+  @apply text-base-content max-w-[1080px] w-full;
 }
 .blog-preview {
-  @apply flex flex-row justify-center items-center gap-2 p-2;
+  @apply flex flex-row justify-center items-center gap-2 p-2 overflow-x-auto;
 }
 .about-item {
   @apply border rounded-full border-neutral px-2 py-1 flex flex-row flex-nowrap text-nowrap h-7 text-sm items-center;
