@@ -28,7 +28,14 @@ const router = createRouter({
       name: 'blog-detail',
       component: BlogDetail
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
 })
 
 router.beforeEach(() => {

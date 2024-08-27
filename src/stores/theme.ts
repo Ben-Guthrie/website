@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, ref, watch, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 
 export const useThemeStore = defineStore('theme', () => {
   const isMobile = ref(window.innerWidth <= 760)
@@ -13,7 +13,7 @@ export const useThemeStore = defineStore('theme', () => {
 
   function handleScroll() {
     // Get the current scroll position
-    const currentScrollPosition = document.getElementById('content')?.scrollTop || 0
+    const currentScrollPosition = window.scrollY || document.documentElement.scrollTop
     // Because of momentum scrolling on mobiles, we shouldn't continue if it is less than zero
     if (currentScrollPosition < 0) {
       return

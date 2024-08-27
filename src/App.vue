@@ -11,11 +11,11 @@ const theme = useThemeStore()
 
 onMounted(() => {
   window.addEventListener('resize', theme.handleResizeWindow)
-  document.getElementById('content')?.addEventListener('scroll', theme.handleScroll)
+  window.addEventListener('scroll', theme.handleScroll)
 })
 onUnmounted(() => {
   window.removeEventListener('resize', theme.handleResizeWindow)
-  document.getElementById('content')?.removeEventListener('scroll', theme.handleScroll)
+  window.removeEventListener('scroll', theme.handleScroll)
 })
 </script>
 
@@ -25,7 +25,7 @@ onUnmounted(() => {
     :class="{ dark: theme.darkMode }"
     :data-theme="theme.darkMode ? 'dark' : 'light'"
   >
-    <header v-show="theme.showHeader">
+    <header :class="{ invisible: !theme.showHeader }">
       <div class="navbar">
         <BenGuthrie @click="router.replace('/')" class="name cursor-pointer"></BenGuthrie>
         <div class="w-full" />
@@ -56,7 +56,7 @@ onUnmounted(() => {
 
 <style lang="postcss" scoped>
 .page {
-  @apply bg-base-100 h-screen w-full min-h-screen;
+  @apply bg-base-100 h-fit w-full min-h-screen;
   @apply flex flex-nowrap flex-col items-center text-dark;
 }
 
@@ -94,9 +94,9 @@ nav .nav-option-active {
 }
 
 .content {
-  @apply flex flex-col h-full pt-16;
+  @apply pt-16 pb-2 flex flex-col h-full;
   @apply items-center relative;
-  @apply w-full overflow-auto;
+  @apply w-full;
 }
 
 .slide-right-enter-active,
