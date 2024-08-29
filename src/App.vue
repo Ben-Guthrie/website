@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, watch } from 'vue'
 import DarkModeIcon from './components/icons/DarkModeIcon.vue'
 import { useThemeStore } from './stores'
 import BenGuthrie from './components/icons/BenGuthrie.vue'
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import router from './router'
 import ModalPopup from './components/contents/ModalPopup.vue'
 
@@ -17,6 +17,8 @@ onUnmounted(() => {
   window.removeEventListener('resize', theme.handleResizeWindow)
   window.removeEventListener('scroll', theme.handleScroll)
 })
+
+watch(useRoute(), () => console.log('route changed'))
 </script>
 
 <template>
@@ -33,7 +35,9 @@ onUnmounted(() => {
           <RouterLink to="/projects" class="nav-option" active-class="nav-option-active"
             >Projects</RouterLink
           >
-          <div class="nav-option text-neutral cursor-auto">Travel</div>
+          <RouterLink to="/travel" class="nav-option" active-class="nav-option-active">
+            Travel
+          </RouterLink>
           <RouterLink to="/blog" class="nav-option" active-class="nav-option-active"
             >Blog</RouterLink
           >
@@ -94,7 +98,7 @@ nav .nav-option-active {
 }
 
 .content {
-  @apply pt-16 pb-2 flex flex-col h-full;
+  @apply pt-16 pb-2 flex flex-col shrink-0 grow h-screen;
   @apply items-center relative;
   @apply w-full;
 }

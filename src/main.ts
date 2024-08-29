@@ -31,6 +31,9 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig)
 const analytics = getAnalytics(firebaseApp)
 
+// Import mapbox styles
+import 'mapbox-gl/dist/mapbox-gl.css'
+
 const app = createApp(App)
 
 app.use(createPinia())

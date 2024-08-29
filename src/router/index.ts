@@ -4,6 +4,7 @@ import ProjectsView from '../views/ProjectsView.vue'
 import BlogHome from '../views/BlogHome.vue'
 import BlogDetail from '@/views/BlogDetail.vue'
 import { useThemeStore } from '@/stores'
+import TravelView from '@/views/TravelView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,11 @@ const router = createRouter({
       path: '/projects',
       name: 'projects',
       component: ProjectsView
+    },
+    {
+      path: '/travel',
+      name: 'travel',
+      component: TravelView
     },
     {
       path: '/blog',
