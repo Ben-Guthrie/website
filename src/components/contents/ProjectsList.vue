@@ -20,10 +20,10 @@
 
         <div v-if="!theme.isMobile" class="portfolio">
           <ProjectPortfolioItem
-            v-for="alias in projectsToList"
-            :key="alias"
+            v-for="slug in projectsToList"
+            :key="slug"
             :full="false"
-            :item="cs.projectsDict[alias]"
+            :item="cs.projectsDict[slug]"
           />
           <div class="see-more" v-if="preview">
             <RouterLink class="btn" to="/projects">
@@ -39,14 +39,14 @@
         >
           <div
             class="carousel-item relative w-full h-fit max-h-full flex justify-center overflow-auto"
-            v-for="(alias, index) in projectsToList"
-            :key="alias"
+            v-for="(slug, index) in projectsToList"
+            :key="slug"
           >
             <ProjectPortfolioItem
               class="min-w-[80%] w-[80%] h-fit"
-              :item="cs.projectsDict[alias]"
+              :item="cs.projectsDict[slug]"
               :full="true"
-              :id="alias"
+              :id="slug"
             />
             <div
               class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between"
@@ -136,8 +136,9 @@ const theme = useThemeStore()
 const scrolling = ref(false)
 
 const projectsToList = computed(() => {
+  if (!cs.projects) return []
   if (!props.preview) return cs.visibleProjects
-  else return cs.projects.slice(0, 2).map((proj) => proj.alias)
+  else return cs.projects.slice(0, 2).map((proj) => proj.slug)
 })
 
 function setFilter(tag: string) {

@@ -1,6 +1,6 @@
 export interface PortfolioItem {
-  name: string
-  alias: string
+  title: string
+  slug: string
   tags: Array<string>
   summary: string
   thumbnail: string
