@@ -1,7 +1,7 @@
 import { ref, computed, type ComputedRef, type Ref } from 'vue'
 import { defineStore } from 'pinia'
-import projectsJson from '../data/projects.json'
 import type { BlogPost, ProjectItem } from '@/types'
+import { createClient } from '@sanity/client'
 
 export const projectTags = [
   { tag: 'data', name: 'Data Analysis' },
@@ -11,58 +11,114 @@ export const projectTags = [
 ]
 
 export const useContentsStore = defineStore('contents', () => {
-  /* ----------- Projects ---------- */
-  // list of all projects
-  const projects = ref(projectsJson as ProjectItem[])
-
-  // dictionary matching alias to project
-  const projectsDict: ComputedRef<{ [alias: string]: ProjectItem }> = computed(() =>
-    projects.value.reduce(
-      (dict, project) => {
-        dict[project.alias] = project
-        return dict
-      },
-      {} as { [alias: string]: ProjectItem }
-    )
-  )
-
-  // dictionary matching skill name with experience
-  const skills = ref(
-    projects.value.reduce(
-      (accumulator, project) => {
-        project.skills.forEach((skill) => {
-          if (!Object.keys(accumulator).includes(skill.skill)) {
-            accumulator[skill.skill] = { experience: [], total: null }
-          }
-          accumulator[skill.skill].experience.push({ project: project.alias, level: skill.level })
-        })
-
-        return accumulator
-      },
-      {} as {
-        [skill: string]: {
-          experience: { project: string; level: 1 | 2 | 3 }[]
-          total: number | null
-        }
-      }
-    )
-  )
-
-  // compute the total experience for each skill
-  Object.values(skills.value).forEach((value) => {
-    value.total = value.experience.reduce((total, experience) => (total += experience.level), 0)
+  // Set up Sanity CMS client
+  const sanity = createClient({
+    projectId: 'ew0zmfl8',
+    dataset: 'production',
+    useCdn: true,
+    apiVersion: '2024-08-29'
   })
 
+  // Fetch travel data from Sanity
+  const travelQuery = `*[_type == "travel"]{
+ _id,
+ tripName,
+ from,
+ to,
+ images
+ }`
+  const loadingTravel = ref(true)
+  const trips = ref([])
+  sanity.fetch(travelQuery).then(
+    (data) => {
+      loadingTravel.value = false
+      trips.value = data
+    },
+    (error) => {
+      console.error(error)
+    }
+  )
+
+  /* ----------- Projects ---------- */
+  // Fetch project data from Sanity
+  const projects: Ref<Array<ProjectItem>> = ref([])
+  const skills: Ref<{
+    [skill: string]: {
+      experience: { project: string; level: 1 | 2 | 3 }[]
+      total: number | null
+    }
+  }> = ref({})
+
+  const projectsQuery = `*[_type == "project"] | order(date desc){
+  _id,
+  title,
+  "slug": slug.current,
+  tags,
+  summary,
+  "thumbnail": thumbnail.asset->url,
+  skills,
+  footers,
+  link
+  }`
+  const loadingProjects = ref(true)
+  sanity.fetch(projectsQuery).then(
+    (data) => {
+      projects.value = data
+      projects.value
+
+      // Create dict of skills to total experience
+      skills.value = projects.value?.reduce(
+        (accumulator, project) => {
+          project.skills.forEach((skill) => {
+            if (!Object.keys(accumulator).includes(skill.skill)) {
+              accumulator[skill.skill] = { experience: [], total: null }
+            }
+            accumulator[skill.skill].experience.push({ project: project.slug, level: skill.level })
+          })
+
+          return accumulator
+        },
+        {} as {
+          [skill: string]: {
+            experience: { project: string; level: 1 | 2 | 3 }[]
+            total: number | null
+          }
+        }
+      )
+      // compute the total experience for each skill
+      Object.values(skills.value!).forEach((value) => {
+        value.total = value.experience.reduce((total, experience) => (total += experience.level), 0)
+      })
+
+      loadingProjects.value = false
+    },
+    (error) => {
+      console.error(error)
+    }
+  )
+
+  // dictionary matching slug to project
+  const projectsDict: ComputedRef<{ [slug: string]: ProjectItem }> = computed(() =>
+    projects.value?.reduce(
+      (dict, project) => {
+        dict[project.slug] = project
+        return dict
+      },
+      {} as { [slug: string]: ProjectItem }
+    )
+  )
+
   // make array of [word, weight] for the wordcloud
-  const skillWords = computed(() =>
-    Object.entries(skills.value).reduce(
+  const skillWords = computed(() => {
+    if (!skills.value) return []
+    return Object.entries(skills.value).reduce(
       (accumulator, [name, skill]) => {
         accumulator.push([name, skill.total || 0])
         return accumulator
       },
       [] as Array<[string, number]>
     )
-  )
+  })
 
   const filters: Ref<Array<string>> = ref([])
 
@@ -83,44 +139,45 @@ export const useContentsStore = defineStore('contents', () => {
   }
 
   const visibleProjects = computed(() => {
-    const projectAliases = projects.value.map((project) => project.alias)
+    if (!projects.value) return []
+    const projectSlugs = projects.value.map((project) => project.slug)
     // if nothing is filtered, return all
     if (filters.value.length === 0) {
-      return projectAliases
+      return projectSlugs
     }
     // otherwise check if tag is in filters
-    return projectAliases.filter((_, index) =>
-      projects.value[index].tags.some((tag) => isFilterActive(tag))
+    return projectSlugs?.filter((_, index) =>
+      projects.value![index].tags.some((tag) => isFilterActive(tag))
     )
   })
 
   const activeProject: Ref<string | undefined> = ref()
 
-  function setProjectActive(alias: string) {
-    activeProject.value = alias
+  function setProjectActive(slug: string) {
+    activeProject.value = slug
   }
 
-  function setProjectInactive(alias: string) {
-    if (activeProject.value === alias) activeProject.value = undefined
+  function setProjectInactive(slug: string) {
+    if (activeProject.value === slug) activeProject.value = undefined
   }
 
-  function isProjectActive(alias: string) {
-    return activeProject.value === alias
+  function isProjectActive(slug: string) {
+    return activeProject.value === slug
   }
 
   const hoveredProjects: Ref<Array<string>> = ref([])
 
-  function setHoveredProject(alias: string) {
-    hoveredProjects.value = [alias]
+  function setHoveredProject(slug: string) {
+    hoveredProjects.value = [slug]
   }
 
-  function unsetHoveredProject(alias: string) {
-    if (hoveredProjects.value.includes(alias))
-      hoveredProjects.value.splice(hoveredProjects.value.indexOf(alias), 1)
+  function unsetHoveredProject(slug: string) {
+    if (hoveredProjects.value.includes(slug))
+      hoveredProjects.value.splice(hoveredProjects.value.indexOf(slug), 1)
   }
 
-  function isProjectHovered(alias: string) {
-    return hoveredProjects.value.includes(alias)
+  function isProjectHovered(slug: string) {
+    return hoveredProjects.value.includes(slug)
   }
 
   const hoveredSkill: Ref<string | undefined> = ref()
@@ -143,26 +200,28 @@ export const useContentsStore = defineStore('contents', () => {
       return hoveredProjects.value
     }
     // If a skill is hovered, highlight all associated projects
-    if (hoveredSkill.value) {
+    if (hoveredSkill.value && skills.value) {
       return skills.value[hoveredSkill.value].experience.map((exp) => exp.project)
     }
     return []
   })
 
   const visibleSkills = computed(() => {
+    if (!skills.value) return []
     // All skills listed in visible projects
     return Object.keys(skills.value).filter((skill) =>
-      skills.value[skill].experience.some((exp) => visibleProjects.value.includes(exp.project))
+      skills.value![skill].experience.some((exp) => visibleProjects.value.includes(exp.project))
     )
   })
 
   function moveProjectToStart(project: string) {
     // Move a project to the start of the list
-    projects.value.sort((a, b) => {
-      if (a.alias === project) return -1
-      if (b.alias === project) return 1
-      return 0
-    })
+    if (projects.value)
+      projects.value.sort((a, b) => {
+        if (a.slug === project) return -1
+        if (b.slug === project) return 1
+        return 0
+      })
   }
 
   /* ------------ Blog ------------ */
@@ -199,6 +258,7 @@ export const useContentsStore = defineStore('contents', () => {
     setHoveredSkill,
     unsetHoveredSkill,
     isSkillHovered,
-    blogPosts
+    blogPosts,
+    trips
   }
 })

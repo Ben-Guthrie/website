@@ -17,12 +17,12 @@
       <span
         class="text-md md:text-md font-semibold"
         :class="{ 'text-xl font-bold overflow-auto': full }"
-        >{{ item.name }}</span
+        >{{ item.title }}</span
       >
 
       <div class="img-container">
         <img
-          :src="'img/' + item.thumbnail"
+          :src="item.thumbnail"
           class="thumbnail"
           :class="{ 'object-contain max-h-[40vh]': full }"
         />
@@ -41,7 +41,7 @@
 
       <div class="footer">
         <div class="basis-1/4 flex-initial">
-          <div class="footer-l" v-if="item.footers.left !== undefined">
+          <div class="footer-l" v-if="item.footers && item.footers.left">
             <StatsIcon :icon="item.footers.left.icon" />
             <span> {{ item.footers.left.text }} </span>
           </div>
@@ -75,7 +75,7 @@
         </div>
 
         <div class="basis-1/4 flex-initial">
-          <div class="footer-r" v-if="item.footers.right !== undefined">
+          <div class="footer-r" v-if="item.footers && item.footers.right">
             <span> {{ item.footers.right.text }}</span>
             <StatsIcon :icon="item.footers.right.icon" />
           </div>
@@ -101,27 +101,27 @@ const cs = useContentsStore()
 
 const hovered = ref(false)
 
-const highlighted = computed(() => cs.highlightedProjects.includes(props.item.alias))
+const highlighted = computed(() => cs.highlightedProjects.includes(props.item.slug))
 
-const active = computed(() => cs.isProjectActive(props.item.alias))
+const active = computed(() => cs.isProjectActive(props.item.slug))
 
 function setHovered() {
   hovered.value = true
-  cs.setHoveredProject(props.item.alias)
+  cs.setHoveredProject(props.item.slug)
 }
 
 function setNotHovered() {
   hovered.value = false
-  cs.unsetHoveredProject(props.item.alias)
+  cs.unsetHoveredProject(props.item.slug)
 }
 
 function setActive() {
-  if (!active.value) cs.setProjectActive(props.item.alias)
-  else cs.setProjectInactive(props.item.alias)
+  if (!active.value) cs.setProjectActive(props.item.slug)
+  else cs.setProjectInactive(props.item.slug)
 }
 
 function setInactive() {
-  cs.setProjectInactive(props.item.alias)
+  cs.setProjectInactive(props.item.slug)
 }
 </script>
 
