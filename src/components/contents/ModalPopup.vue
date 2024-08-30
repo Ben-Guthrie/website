@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item !== undefined" class="mask" @click="cs.setProjectInactive(item.alias)">
+  <div v-if="item !== undefined" class="mask" @click="cs.setProjectInactive(item.slug)">
     <ProjectPortfolioItem v-on:click.stop class="popup" :item="item" :full="true" />
   </div>
 </template>
