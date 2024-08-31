@@ -17,8 +17,6 @@ onUnmounted(() => {
   window.removeEventListener('resize', theme.handleResizeWindow)
   window.removeEventListener('scroll', theme.handleScroll)
 })
-
-watch(useRoute(), () => console.log('route changed'))
 </script>
 
 <template>

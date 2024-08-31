@@ -22,17 +22,25 @@ export const useContentsStore = defineStore('contents', () => {
   // Fetch travel data from Sanity
   const travelQuery = `*[_type == "travel"]{
  _id,
+ tripId,
  tripName,
  from,
  to,
- images
+ "images": images.images[].asset->url,
+ highlights
  }`
   const loadingTravel = ref(true)
-  const trips = ref([])
+  const trips: Ref<{ [tripId: string]: any }> = ref({})
   sanity.fetch(travelQuery).then(
-    (data) => {
+    (data: any[]) => {
       loadingTravel.value = false
-      trips.value = data
+      trips.value = data.reduce(
+        (dict, trip) => {
+          dict[trip.tripId as string] = trip
+          return dict
+        },
+        {} as { [tripId: string]: any }
+      )
     },
     (error) => {
       console.error(error)

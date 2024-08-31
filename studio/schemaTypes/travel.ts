@@ -11,6 +11,11 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+      name: 'tripId',
+      title: 'Trip ID (same as mapbox tripId)',
+      type: 'string',
+    }),
+    defineField({
       name: 'from',
       type: 'date',
     }),
