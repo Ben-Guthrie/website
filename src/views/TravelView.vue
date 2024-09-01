@@ -10,6 +10,7 @@ import TravelMap from '@/components/contents/travel/TravelMap.vue'
 
 <style scoped lang="postcss">
 .travel {
-  @apply shrink-0 h-full w-full relative;
+  @apply shrink-0 grow w-full absolute;
+  height: -webkit-fill-available;
 }
 </style>

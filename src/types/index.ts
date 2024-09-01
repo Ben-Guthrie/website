@@ -1,7 +1,7 @@
 export interface PortfolioItem {
   title: string
   slug: string
-  tags: Array<string>
+  tags: Array<{ id: string; description: string; title: string }>
   summary: string
   thumbnail: string
   footers: {

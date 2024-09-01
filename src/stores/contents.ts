@@ -3,13 +3,6 @@ import { defineStore } from 'pinia'
 import type { BlogPost, ProjectItem } from '@/types'
 import { createClient } from '@sanity/client'
 
-export const projectTags = [
-  { tag: 'data', name: 'Data Analysis' },
-  { tag: 'web', name: 'Web Design' },
-  { tag: 'backend', name: 'Backend' },
-  { tag: 'ml', name: 'Machine Learning' }
-]
-
 export const useContentsStore = defineStore('contents', () => {
   // Set up Sanity CMS client
   const sanity = createClient({
@@ -48,6 +41,12 @@ export const useContentsStore = defineStore('contents', () => {
   )
 
   /* ----------- Projects ---------- */
+  const loadingProjects = ref(true)
+  // Fetch project categories from Sanity
+  const categoryQuery = `*[_type == "category"]`
+  const categories = ref([] as { id: string; title: string; description: string }[])
+  sanity.fetch(categoryQuery).then((data) => (categories.value = data))
+
   // Fetch project data from Sanity
   const projects: Ref<Array<ProjectItem>> = ref([])
   const skills: Ref<{
@@ -61,20 +60,18 @@ export const useContentsStore = defineStore('contents', () => {
   _id,
   title,
   "slug": slug.current,
-  tags,
+  "tags": tags[]->,
   summary,
   "thumbnail": thumbnail.asset->url,
   skills,
   footers,
   link
   }`
-  const loadingProjects = ref(true)
   sanity.fetch(projectsQuery).then(
     (data) => {
       projects.value = data
-      projects.value
 
-      // Create dict of skills to total experience
+      // Create dict of all skills mentioned in projects
       skills.value = projects.value?.reduce(
         (accumulator, project) => {
           project.skills.forEach((skill) => {
@@ -99,6 +96,7 @@ export const useContentsStore = defineStore('contents', () => {
       })
 
       loadingProjects.value = false
+      console.log(projects.value)
     },
     (error) => {
       console.error(error)
@@ -155,7 +153,7 @@ export const useContentsStore = defineStore('contents', () => {
     }
     // otherwise check if tag is in filters
     return projectSlugs?.filter((_, index) =>
-      projects.value![index].tags.some((tag) => isFilterActive(tag))
+      projects.value![index].tags.some((tag) => isFilterActive(tag.id))
     )
   })
 
@@ -245,6 +243,7 @@ export const useContentsStore = defineStore('contents', () => {
 
   return {
     projects,
+    categories,
     skills,
     skillWords,
     projectsDict,

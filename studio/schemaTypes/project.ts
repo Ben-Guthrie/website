@@ -22,7 +22,8 @@ export default defineType({
     defineField({
       name: 'tags',
       type: 'array',
-      of: [defineArrayMember({type: 'string'})],
+
+      of: [defineArrayMember({type: 'reference', to: {type: 'category'}})],
     }),
     defineField({
       name: 'summary',

@@ -9,12 +9,12 @@
         <div class="filters" v-if="!theme.isMobile && !preview">
           <button
             class="btn btn-sm"
-            :class="{ 'btn-active': cs.isFilterActive(filter.tag) }"
-            @click="setFilter(filter.tag)"
-            v-for="filter in projectTags"
-            :key="filter.tag"
+            :class="{ 'btn-active': cs.isFilterActive(filter.id) }"
+            @click="setFilter(filter.id)"
+            v-for="filter in cs.categories"
+            :key="filter.id"
           >
-            {{ filter.name }}
+            {{ filter.title }}
           </button>
         </div>
 
@@ -101,13 +101,13 @@
       <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
         <!-- Sidebar content here -->
         <li
-          v-for="filter in projectTags"
-          :key="filter.tag"
-          :class="{ active: cs.isFilterActive(filter.tag) }"
-          @click="setFilter(filter.tag)"
+          v-for="filter in cs.categories"
+          :key="filter.id"
+          :class="{ active: cs.isFilterActive(filter.id) }"
+          @click="setFilter(filter.id)"
         >
           <a>
-            {{ filter.name }}
+            {{ filter.title }}
           </a>
         </li>
         <li @click="cs.clearFilter()" class="text-info">
@@ -122,7 +122,7 @@
 import ProjectPortfolioItem from '@/components/contents/items/ProjectPortfolioItem.vue'
 import IconFilter from '@/components/icons/IconFilter.vue'
 import { useThemeStore } from '@/stores'
-import { projectTags, useContentsStore } from '@/stores/contents'
+import { useContentsStore } from '@/stores/contents'
 import { computed, ref } from 'vue'
 import IconArrowRight from '../icons/IconArrowRight.vue'
 
@@ -142,7 +142,9 @@ const projectsToList = computed(() => {
 })
 
 function setFilter(tag: string) {
+  console.log(tag)
   cs.setFilter(tag)
+  console.log(cs.filters)
 }
 
 async function handleCarouselButtonClick(scrollToId: string) {

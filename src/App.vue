@@ -96,7 +96,7 @@ nav .nav-option-active {
 }
 
 .content {
-  @apply pt-16 pb-2 flex flex-col shrink-0 grow h-screen;
+  @apply pt-16 pb-2 flex flex-col shrink-0 grow;
   @apply items-center relative;
   @apply w-full;
 }

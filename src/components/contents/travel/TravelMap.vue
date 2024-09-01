@@ -120,6 +120,8 @@ onMounted(() => {
               map.value?.setFeatureState(feature, { hover: true })
             })
           }
+          // Set cursor to pointer
+          map.value!.getCanvas().style.cursor = 'pointer'
         }
       })
       map.value?.on('mouseleave', ['travel-points', 'travel-lines'], () => {
@@ -130,6 +132,8 @@ onMounted(() => {
           })
         }
         hoveredTripId.value = undefined
+        // Set cursor back to default
+        map.value!.getCanvas().style.cursor = ''
       })
 
       map.value?.on('click', (event) => {
@@ -161,6 +165,7 @@ function unsetActiveFeature() {
 
     activeTripId.value = undefined
 
+    // Return to the default map view
     map.value?.easeTo({ center: CENTER as [number, number], zoom: ZOOM })
   }
 }
