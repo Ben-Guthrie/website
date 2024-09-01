@@ -1,8 +1,5 @@
 <template>
   <div class="home-page">
-    <div class="w-full flex justify-center py-1">
-      <div class="badge">This site is a work in progress and is constantly being updated.</div>
-    </div>
     <div class="pb-8">
       <PortfolioContent title="About Me">
         <div class="flex flex-row gap-8 max-w-[32rem] items-center">
@@ -73,6 +70,6 @@ const contents = useContentsStore()
   @apply border rounded-full border-neutral px-2 py-1 flex flex-row flex-nowrap text-nowrap h-7 text-sm items-center;
 }
 .blurb {
-  @apply prose max-w-[90%];
+  @apply prose max-w-[90%] pb-2;
 }
 </style>
