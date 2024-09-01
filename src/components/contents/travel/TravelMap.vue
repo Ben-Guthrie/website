@@ -62,15 +62,15 @@
 
 <script setup lang="ts">
 import { useContentsStore, useThemeStore } from '@/stores'
-import { Map, type FeatureSelector, type GeoJSONFeature } from 'mapbox-gl'
+import { Map, type FeatureSelector } from 'mapbox-gl'
 import { computed, onMounted, onUnmounted, ref, watch, type Ref } from 'vue'
 
 const CENTER = [0, 0]
 const ZOOM = 1
 const MAXZOOM = 3
 const MINZOOM = 0.7
-const STYLE_LIGHT = 'mapbox://styles/bengu3/cm0ebpn3200y901psej22gyjn'
-const STYLE_DARK = 'mapbox://styles/bengu3/cm0eia9t800x201rbfk0ma0cj'
+const STYLE_LIGHT = import.meta.env.VITE_MAPBOX_STYLE_LIGHT
+const STYLE_DARK = import.meta.env.VITE_MAPBOX_STYLE_DARK
 
 const theme = useThemeStore()
 const contents = useContentsStore()
@@ -98,8 +98,7 @@ onMounted(() => {
       maxZoom: MAXZOOM,
       minZoom: MINZOOM,
       projection: 'naturalEarth',
-      accessToken:
-        'pk.eyJ1IjoiYmVuZ3UzIiwiYSI6ImNseGFqZGNleDA0ZDMyanM4NTAyZzBhdnMifQ.Ffn0umUDjtQ4dL8tb37C2A'
+      accessToken: import.meta.env.VITE_MAPBOX_API_KEY
     })
 
     watch(
