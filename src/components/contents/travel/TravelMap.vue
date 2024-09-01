@@ -110,43 +110,39 @@ onMounted(() => {
       getAllFeaturesPerTrip()
       map.value?.resize()
 
-      map.value?.on('mousemove', ['travel-points', 'travel-lines'], (event) => {
-        // set feature state to hovered=true for the feature under the mouse.
+      map.value?.on('mousemove', ['points', 'lines'], (event) => {
         if (event.features && event.features.length > 0) {
           if (hoveredTripId.value !== event.features[0].properties?.tripId) {
-            hoveredTripId.value = event.features[0].properties?.tripId
-            getFeaturesByTripId(hoveredTripId.value || '')?.forEach((feature) => {
-              map.value?.setFeatureState(feature, { hover: true })
-            })
+            // If we've moved from one feature to another
+            if (hoveredTripId.value !== undefined) {
+              // Set the hover state for the old feature to false
+              unsetHoveredFeature()
+            }
+            // Set the hover state for the currently hovered feature to true
+            setHoveredFeature(event.features[0].properties?.tripId)
           }
           // Set cursor to pointer
           map.value!.getCanvas().style.cursor = 'pointer'
         }
       })
-      map.value?.on('mouseleave', ['travel-points', 'travel-lines'], () => {
-        // Set the feature state to hovered=false
-        if (hoveredTripId.value !== undefined) {
-          getFeaturesByTripId(hoveredTripId.value)?.forEach((feature) => {
-            map.value?.setFeatureState(feature, { hover: false })
-          })
-        }
-        hoveredTripId.value = undefined
+
+      map.value?.on('mouseleave', ['points', 'lines'], () => {
+        // Set the hover state for the previously hovered feature to false
+        unsetHoveredFeature()
         // Set cursor back to default
         map.value!.getCanvas().style.cursor = ''
       })
 
       map.value?.on('click', (event) => {
-        // If the user clicked on one of the features, get its information.
+        // Unset the current active feature if it exists
+        unsetActiveFeature()
+        // If the user clicked on a feature, get its information.
         const features = map.value!.queryRenderedFeatures(event.point, {
-          layers: ['travel-lines', 'travel-points']
+          layers: ['lines', 'points']
         })
-        if (features.length == 0) {
-          // If they didn't click on a feature, reset the active feature
-          if (activeTripId.value !== undefined) {
-            unsetActiveFeature()
-          }
-          return
-        }
+        // If they didn't click on a feature, do not set a new active feature
+        if (features.length == 0) return
+
         // If they did click on a feature, set it as active
         setActiveFeature(features[0].properties?.tripId)
         // Zoom to the feature location
@@ -155,6 +151,24 @@ onMounted(() => {
     })
   }
 })
+
+function setHoveredFeature(tripId: string) {
+  // set feature state to hovered=true for the feature under the mouse.
+  hoveredTripId.value = tripId
+  getFeaturesByTripId(hoveredTripId.value || '')?.forEach((feature) => {
+    map.value?.setFeatureState(feature, { hover: true })
+  })
+}
+
+function unsetHoveredFeature() {
+  // Set the feature state to hovered=false
+  if (hoveredTripId.value !== undefined) {
+    getFeaturesByTripId(hoveredTripId.value)?.forEach((feature) => {
+      map.value?.setFeatureState(feature, { hover: false })
+    })
+  }
+  hoveredTripId.value = undefined
+}
 
 function unsetActiveFeature() {
   if (activeTripId.value !== undefined) {
@@ -185,15 +199,15 @@ function getAllFeaturesPerTrip() {
   const featureMap = {} as { [tripId: string]: FeatureSelector[] }
   map.value
     ?.querySourceFeatures('composite', {
-      sourceLayer: 'travel'
+      sourceLayer: 'lines'
     })
-    .map((feature) => ({ ...feature, sourceLayer: 'travel' }))
+    .map((feature) => ({ ...feature, sourceLayer: 'lines' }))
     .concat(
       map.value
         ?.querySourceFeatures('composite', {
-          sourceLayer: 'travel-points'
+          sourceLayer: 'points'
         })
-        .map((feature) => ({ ...feature, sourceLayer: 'travel-points' }))
+        .map((feature) => ({ ...feature, sourceLayer: 'points' }))
     )
     .forEach((feature) => {
       if (Object.keys(featureMap).includes(feature.properties?.tripId))

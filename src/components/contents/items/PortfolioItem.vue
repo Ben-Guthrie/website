@@ -4,7 +4,7 @@
     :class="{
       'item-hovered': highlighted,
       'item-small cursor-pointer': !full,
-      'overflow-autoo': full
+      'overflow-auto': full
     }"
   >
     <div
@@ -15,7 +15,7 @@
       @click="full ? null : setActive()"
     >
       <span
-        class="text-md md:text-md font-semibold"
+        class="text-md md:text-md font-semibold dark:text-highlight"
         :class="{ 'text-xl font-bold overflow-auto': full }"
         >{{ item.title }}</span
       >

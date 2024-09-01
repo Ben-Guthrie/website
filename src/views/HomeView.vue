@@ -50,7 +50,6 @@ import IconArrowRight from '@/components/icons/IconArrowRight.vue'
 import IconEmail from '@/components/icons/IconEmail.vue'
 import IconGithub from '@/components/icons/IconGithub.vue'
 import IconLinkedin from '@/components/icons/IconLinkedin.vue'
-import router from '@/router'
 import { useContentsStore } from '@/stores'
 
 const contents = useContentsStore()

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, watch } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import DarkModeIcon from './components/icons/DarkModeIcon.vue'
 import { useThemeStore } from './stores'
 import BenGuthrie from './components/icons/BenGuthrie.vue'
-import { RouterView, useRoute } from 'vue-router'
+import { RouterView } from 'vue-router'
 import router from './router'
 import ModalPopup from './components/contents/ModalPopup.vue'
 
@@ -56,10 +56,10 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 .page {
   @apply bg-base-100 h-fit w-full min-h-screen;
-  @apply flex flex-nowrap flex-col items-center text-dark;
+  @apply flex flex-nowrap flex-col items-center text-base-content;
 }
 
 header {

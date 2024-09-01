@@ -142,9 +142,7 @@ const projectsToList = computed(() => {
 })
 
 function setFilter(tag: string) {
-  console.log(tag)
   cs.setFilter(tag)
-  console.log(cs.filters)
 }
 
 async function handleCarouselButtonClick(scrollToId: string) {

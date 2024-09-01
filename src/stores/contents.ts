@@ -96,7 +96,6 @@ export const useContentsStore = defineStore('contents', () => {
       })
 
       loadingProjects.value = false
-      console.log(projects.value)
     },
     (error) => {
       console.error(error)
