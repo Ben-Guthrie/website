@@ -3,7 +3,7 @@
     <div class="w-full flex justify-center py-1">
       <div class="badge">This site is a work in progress and is constantly being updated.</div>
     </div>
-    <div class="pb-12">
+    <div class="pb-8">
       <PortfolioContent title="About Me">
         <div class="flex flex-row gap-8 max-w-[32rem] items-center">
           <img src="/img/me.jpg" class="rounded-full h-32" />
@@ -26,7 +26,7 @@
         </div>
       </PortfolioContent>
     </div>
-    <div class="pb-12">
+    <div class="pb-8">
       <PortfolioContent title="Recent Projects">
         <ProjectsList :preview="true" />
       </PortfolioContent>
@@ -39,6 +39,13 @@
         </div>
       </PortfolioContent>
     </div>
+  </div>
+  <div class="divider" />
+  <div class="blurb">
+    This page was built using Vue and Typescript, implementing a custom
+    <a href="sanity.io">Sanity</a> CMS, and using tailwind CSS and
+    <a href="daisyui.com">DaisyUI</a> for styling. You can view the source code
+    <a href="https://github.com/Ben-Guthrie/website">here</a>.
   </div>
 </template>
 
@@ -64,5 +71,8 @@ const contents = useContentsStore()
 }
 .about-item {
   @apply border rounded-full border-neutral px-2 py-1 flex flex-row flex-nowrap text-nowrap h-7 text-sm items-center;
+}
+.blurb {
+  @apply prose max-w-[90%];
 }
 </style>
