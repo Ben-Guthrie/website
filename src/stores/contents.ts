@@ -1,6 +1,6 @@
 import { ref, computed, type ComputedRef, type Ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { BlogPost, ProjectItem } from '@/types'
+import type { BlogPost, ProjectItem, ResumeItem } from '@/types'
 import { createClient } from '@sanity/client'
 
 export const useContentsStore = defineStore('contents', () => {
@@ -10,6 +10,19 @@ export const useContentsStore = defineStore('contents', () => {
     dataset: 'production',
     useCdn: true,
     apiVersion: '2024-08-29'
+  })
+
+  // Fetch resume data from Sanity
+  const resumeQuery = `*[_type == "resumeItem"] | order(from desc)`
+  const loadingResume = ref(true)
+  const resumeItems: Ref<ResumeItem[]> = ref([])
+  sanity.fetch(resumeQuery).then((data: any[]) => {
+    loadingResume.value = false
+    data.map((item) => {
+      if (item.from !== undefined) item.from = new Date(item.from)
+      if (item.to !== undefined) item.to = new Date(item.to)
+    })
+    resumeItems.value = data
   })
 
   // Fetch travel data from Sanity
@@ -265,6 +278,7 @@ export const useContentsStore = defineStore('contents', () => {
     unsetHoveredSkill,
     isSkillHovered,
     blogPosts,
-    trips
+    trips,
+    resumeItems
   }
 })

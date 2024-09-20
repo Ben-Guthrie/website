@@ -5,6 +5,7 @@ import BlogHome from '../views/BlogHome.vue'
 import BlogDetail from '@/views/BlogDetail.vue'
 import { useThemeStore } from '@/stores'
 import TravelView from '@/views/TravelView.vue'
+import ResumeView from '@/views/ResumeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,11 @@ const router = createRouter({
       path: '/travel',
       name: 'travel',
       component: TravelView
+    },
+    {
+      path: '/resume',
+      name: 'resume',
+      component: ResumeView
     },
     {
       path: '/blog',

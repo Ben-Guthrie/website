@@ -44,3 +44,14 @@ export interface BlogPost {
   }
   tags: { slug: string; name: string }[]
 }
+
+export interface ResumeItem {
+  title: string
+  shortTitle: string
+  description: Array<any>
+  from: Date
+  to: Date
+  company: string
+  type: 'education' | 'experience'
+  showInPreview: boolean
+}

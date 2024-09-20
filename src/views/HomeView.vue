@@ -5,9 +5,9 @@
         <div class="flex flex-row gap-8 max-w-[32rem] items-center">
           <img src="/img/me.jpg" class="rounded-full h-32" />
           <span class="prose text-base-content"
-            >Hi, I'm Ben Guthrie. I have a PhD in Astronautics, a passion for learning and an
-            unhealthy obsession with starting new projects. This site is an attempt to consolidate
-            my work and allow me to keep track of the skills I have developed.</span
+            >Hi, I'm Ben Guthrie. I have a PhD in Astronautics with Machine Learning, a passion for
+            learning and an unhealthy obsession with starting new projects. This site is an attempt
+            to consolidate my work and allow me to keep track of the skills I have developed.</span
           >
         </div>
         <div class="flex flex-row gap-2 pt-2">
@@ -23,11 +23,20 @@
         </div>
       </PortfolioContent>
     </div>
+    <div class="pb-2">
+      <PortfolioContent title="Work History">
+        <span class="prose"
+          >View my detailed resume <RouterLink to="/resume">here</RouterLink></span
+        >
+        <ResumeTimeline :isPreview="true" />
+      </PortfolioContent>
+    </div>
     <div class="pb-8">
       <PortfolioContent title="Recent Projects">
         <ProjectsList :preview="true" />
       </PortfolioContent>
     </div>
+
     <div>
       <PortfolioContent title="Recent Blog Posts">
         <div class="blog-preview">
@@ -50,11 +59,13 @@
 import BlogList from '@/components/contents/BlogList.vue'
 import PortfolioContent from '@/components/contents/PortfolioContent.vue'
 import ProjectsList from '@/components/contents/ProjectsList.vue'
+import ResumeTimeline from '@/components/contents/ResumeTimeline.vue'
 import IconArrowRight from '@/components/icons/IconArrowRight.vue'
 import IconEmail from '@/components/icons/IconEmail.vue'
 import IconGithub from '@/components/icons/IconGithub.vue'
 import IconLinkedin from '@/components/icons/IconLinkedin.vue'
 import { useContentsStore } from '@/stores'
+import { RouterLink } from 'vue-router'
 
 const contents = useContentsStore()
 </script>
