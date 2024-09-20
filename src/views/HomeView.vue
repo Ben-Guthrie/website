@@ -26,7 +26,7 @@
     <div class="pb-2">
       <PortfolioContent title="Work History">
         <span class="prose">View more details <RouterLink to="/resume">here</RouterLink></span>
-        <ResumeTimeline :isPreview="true" />
+        <ResumeTimeline class="max-w-2xl" :isPreview="true" />
       </PortfolioContent>
     </div>
     <div class="pb-8">

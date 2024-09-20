@@ -19,7 +19,7 @@
       ]"
     >
       <li v-for="(item, index) in items" :key="item.title" class="timeline-item">
-        <hr v-if="index != 0" />
+        <hr class="bg-neutral" v-if="index != 0" />
         <div
           class="flex flex-col px-1"
           :class="{
@@ -52,7 +52,7 @@
             <circle cx="50" cy="50" r="50" />
           </svg>
         </div>
-        <hr v-if="index < items.length - 1" />
+        <hr class="bg-neutral" v-if="index < items.length - 1" />
       </li>
     </ul>
   </div>
@@ -79,7 +79,7 @@ watch(showDetails, (newVal) => console.log(newVal))
 
 <style scoped lang="postcss">
 .timeline-container {
-  @apply overflow-x-auto max-w-3xl pt-2 flex flex-col items-center;
+  @apply overflow-x-auto pt-2 flex flex-col items-center;
 }
 
 .timeline-item:hover .timeline-icon {

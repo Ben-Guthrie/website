@@ -13,6 +13,6 @@ import ResumeTimeline from '@/components/contents/ResumeTimeline.vue'
 
 <style scoped lang="postcss">
 .resume {
-  @apply max-w-[1080px] h-full w-full flex justify-center;
+  @apply max-w-[860px] h-full w-full flex justify-center;
 }
 </style>
