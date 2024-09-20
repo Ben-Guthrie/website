@@ -1,14 +1,14 @@
 <template>
   <div class="resume">
-    <ResumeTimeline :isPreview="false" />
+    <PortfolioContent title="Work History">
+      <ResumeTimeline :isPreview="false" />
+    </PortfolioContent>
   </div>
 </template>
 
 <script setup lang="ts">
+import PortfolioContent from '@/components/contents/PortfolioContent.vue'
 import ResumeTimeline from '@/components/contents/ResumeTimeline.vue'
-import { useThemeStore } from '@/stores'
-
-const theme = useThemeStore()
 </script>
 
 <style scoped lang="postcss">

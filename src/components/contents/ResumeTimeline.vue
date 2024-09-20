@@ -1,15 +1,15 @@
 <template>
   <div class="timeline-container">
-    <div class="form-control" v-if="!isPreview">
+    <div class="form-control pb-2" v-if="!isPreview">
       <label class="label cursor-pointer space-x-4">
         <span class="label-text">Show details</span>
         <input type="checkbox" class="toggle" v-model="showDetails" />
       </label>
     </div>
     <div v-if="!isPreview" class="flex flex-row font-semibold text-xl">
-      <div class="basis-[45%] text-end">Work Experience</div>
+      <div class="basis-[45%] text-end">Education and Certifications</div>
       <div class="basis-[10%]" />
-      <div class="basis-[45%]">Education and Certifications</div>
+      <div class="basis-[45%]">Work Experience</div>
     </div>
     <ul
       class="timeline"
@@ -22,15 +22,23 @@
         <hr v-if="index != 0" />
         <div
           class="flex flex-col px-1"
-          :class="[
-            item.type == 'experience' ? 'timeline-start items-end' : 'timeline-end items-start',
-            isPreview ? 'items-center timeline-box' : 'pb-2'
-          ]"
+          :class="{
+            'timeline-start items-end':
+              (item.type == 'education' && !isPreview) || (item.type == 'experience' && isPreview),
+            'timeline-end items-start':
+              (item.type == 'education' && isPreview) || (item.type == 'experience' && !isPreview),
+            'items-center timeline-box': isPreview,
+            'pb-2': !isPreview
+          }"
         >
           <DateRange v-if="!isPreview" class="italic text-sm" :from="item.from" :to="item.to" />
           <div class="font-semibold">{{ isPreview ? item.shortTitle : item.title }}</div>
           <div>{{ item.company }}</div>
-          <div class="prose" v-if="showDetails && !isPreview">
+          <div
+            class="prose"
+            v-if="showDetails && !isPreview"
+            :class="[item.type == 'education' ? 'text-end' : 'text-start']"
+          >
             <PortableText :value="item.description" />
           </div>
         </div>
@@ -71,7 +79,7 @@ watch(showDetails, (newVal) => console.log(newVal))
 
 <style scoped lang="postcss">
 .timeline-container {
-  @apply overflow-x-auto max-w-3xl pt-4 flex flex-col items-center;
+  @apply overflow-x-auto max-w-3xl pt-2 flex flex-col items-center;
 }
 
 .timeline-item:hover .timeline-icon {

@@ -5,9 +5,9 @@
         <div class="flex flex-row gap-8 max-w-[32rem] items-center">
           <img src="/img/me.jpg" class="rounded-full h-32" />
           <span class="prose text-base-content"
-            >Hi, I'm Ben Guthrie. I have a PhD in Astronautics with Machine Learning, a passion for
-            learning and an unhealthy obsession with starting new projects. This site is an attempt
-            to consolidate my work and allow me to keep track of the skills I have developed.</span
+            >Hi, I'm Ben Guthrie. I’m passionate about learning, experimenting, and building new
+            projects. This site showcases the various projects I have worked on, and allows me to
+            keep track of the skills I've developed along the way.</span
           >
         </div>
         <div class="flex flex-row gap-2 pt-2">
@@ -25,9 +25,7 @@
     </div>
     <div class="pb-2">
       <PortfolioContent title="Work History">
-        <span class="prose"
-          >View my detailed resume <RouterLink to="/resume">here</RouterLink></span
-        >
+        <span class="prose">View more details <RouterLink to="/resume">here</RouterLink></span>
         <ResumeTimeline :isPreview="true" />
       </PortfolioContent>
     </div>
